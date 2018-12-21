@@ -1,0 +1,143 @@
+<div class="adv-detail" fxLayout="row">
+  <mat-card fxFlex="1 1 75%">
+    <mat-card-title>Tạo mới địa điểm</mat-card-title>
+    <mat-card-content fxLayout="column">
+      <div class="basic-info" fxLayout="column">
+        <mat-form-field>
+          <input matInput placeholder="Mã">
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Tiêu đề">
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Số nhà">
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Tên đường">
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Phường">
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Quận">
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Tỉnh">
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Tọa độ">
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Đơn giá">
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Kích thước">
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Số lượng">
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Tầm nhìn">
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Lưu lượng">
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Thời gian thực hiện">
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Hình thức thực hiện">
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Hệ thống chiếu sáng">
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Loại hình">
+        </mat-form-field>
+        <mat-form-field>
+          <textarea matInput placeholder="Mô tả"></textarea>
+        </mat-form-field>
+      </div>
+      <div fxLayout="row">
+        <mat-card class="host-info" fxFlex="1 1 50%">
+          <mat-card-title>Thông tin chủ nhà</mat-card-title>
+          <mat-card-content fxLayout="column">
+            <mat-form-field>
+              <input matInput placeholder="Số điện thoại">
+            </mat-form-field>
+            <mat-form-field>
+              <input matInput placeholder="Email">
+            </mat-form-field>
+            <mat-form-field>
+              <input matInput placeholder="Giá">
+            </mat-form-field>
+            <mat-form-field>
+              <input matInput placeholder="Người liên hệ">
+            </mat-form-field>
+            <mat-form-field>
+              <input matInput placeholder="Ngày bắt đầu">
+            </mat-form-field>
+            <mat-form-field>
+              <input matInput placeholder="Ngày kết thúc">
+            </mat-form-field>
+            <mat-form-field>
+              <textarea matInput placeholder="Ghi chú"></textarea>
+            </mat-form-field>
+          </mat-card-content>
+        </mat-card>
+        <mat-card class="company-info" fxFlex="1 1 50%">
+          <mat-card-title>Thông tin CTQC</mat-card-title>
+          <mat-card-content fxLayout="column">
+            <mat-form-field>
+              <input matInput placeholder="Tên công ty">
+            </mat-form-field>
+            <mat-form-field>
+              <input matInput placeholder="Số điện thoại">
+            </mat-form-field>
+            <mat-form-field>
+              <input matInput placeholder="Email">
+            </mat-form-field>
+            <mat-form-field>
+              <input matInput placeholder="Giá">
+            </mat-form-field>
+            <mat-form-field>
+              <input matInput placeholder="Người liên hệ">
+            </mat-form-field>
+            <mat-form-field>
+              <input matInput placeholder="Ngày bắt đầu">
+            </mat-form-field>
+            <mat-form-field>
+              <input matInput placeholder="Ngày kết thúc">
+            </mat-form-field>
+            <mat-form-field>
+              <textarea matInput placeholder="Ghi chú"></textarea>
+            </mat-form-field>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-flat-button color="warn">Cancel</button>
+      <button mat-flat-button color="primary">Save</button>
+    </mat-card-actions>
+  </mat-card>
+  <div class="media" fxLayout="column" fxFlex="1 1 25%">
+    <mat-card class="normal">
+      <mat-card-title>Hình ảnh</mat-card-title>
+      <mat-card-content fxLayout="column">
+        <div cdkDropList class="images" (cdkDropListDropped)="drop($event)">
+          <div class="image" *ngFor="let movie of movies" cdkDrag>
+            <img src="https://picsum.photos/100/100/?random"/>
+          </div>
+        </div>
+        <input type="file" />
+      </mat-card-content>
+    </mat-card>
+    <mat-card class="map" [ngStyle]="{marginTop: '10px'}">
+      <mat-card-title>Map</mat-card-title>
+      <mat-card-content fxLayout="column">
+        <input type="file" />
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

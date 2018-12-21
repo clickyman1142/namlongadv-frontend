@@ -1,0 +1,17 @@
+:host {
+    .drawer-container {
+        height: calc(100vh - 50px);
+        mat-drawer {
+            min-width: 40px;
+            visibility: visible !important;
+            background-color: #253135;
+        }
+        mat-drawer-inner-container {
+            min-width: 30px !important;
+            overflow-x: hidden;
+        }
+        .wrapper {
+            padding: 10px 10px 0 10px;
+        }
+    }
+}

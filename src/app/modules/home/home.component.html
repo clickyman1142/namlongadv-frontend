@@ -1,0 +1,12 @@
+<app-header [sideMenu]="drawer"></app-header>
+<mat-drawer-container class="drawer-container" [hasBackdrop]="false">
+    <mat-drawer #drawer [mode]="'side'">
+        <app-sidemenu></app-sidemenu>
+    </mat-drawer>
+    <mat-drawer-content fxLayout="column">
+        <div class="wrapper" fxLayout="column" fxFlex="1 1 auto">
+            <app-main fxFlex="1 1 auto"></app-main>
+            <app-footer></app-footer>
+        </div>
+    </mat-drawer-content>
+</mat-drawer-container>
