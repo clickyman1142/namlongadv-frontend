@@ -12,7 +12,10 @@ const routes: Routes = [
       {
         path: '',
         component: AdvManagementMainComponent,
-        pathMatch: 'full'
+        pathMatch: 'full',
+        data: {
+          breadcrumb: 'Quản lý địa điểm'
+        }
       },
       {
         path: 'create',

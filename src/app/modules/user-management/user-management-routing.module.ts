@@ -11,7 +11,10 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        component: UserManagementMainComponent
+        component: UserManagementMainComponent,
+        data: {
+          breadcrumb: 'Quản lý tài khoản'
+        }
       },
       {
         path: 'create',

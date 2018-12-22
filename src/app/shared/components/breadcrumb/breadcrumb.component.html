@@ -1,0 +1,6 @@
+<nav class="breadcrumb">
+  <ul fxLayout="row">
+    <li routerLink="/"><mat-icon [style.height.px]="28">home</mat-icon>Home</li>
+    <li *ngFor="let breadcrumb of breadcrumbs" routerLink="breadcrumb.url">{{breadcrumb.label}}</li>
+  </ul>
+</nav>

@@ -9,7 +9,7 @@ const routes: Routes = [
             {
                 path: '',
                 redirectTo: '/adv-management',
-                pathMatch: 'full'
+                pathMatch: 'full',
             },
             {
                 path: 'adv-management',

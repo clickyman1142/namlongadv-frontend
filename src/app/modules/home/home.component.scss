@@ -6,8 +6,7 @@
             visibility: visible !important;
             background-color: #253135;
         }
-        mat-drawer-inner-container {
-            min-width: 30px !important;
+        /deep/ .mat-drawer-inner-container {
             overflow-x: hidden;
         }
         .wrapper {

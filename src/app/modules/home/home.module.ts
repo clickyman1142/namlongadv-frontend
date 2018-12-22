@@ -7,6 +7,7 @@ import { SideMenuComponent } from '../../shared/components/sidemenu/sidemenu.com
 import { HeaderComponent } from '../../shared/components/header/header.component';
 import { MainComponent } from '../../shared/components/main/main.component';
 import { FooterComponent } from 'src/app/shared/components/footer/footer.component';
+import { BreadcrumbComponent } from 'src/app/shared/components/breadcrumb/breadcrumb.component';
 
 @NgModule({
     declarations: [
@@ -14,7 +15,8 @@ import { FooterComponent } from 'src/app/shared/components/footer/footer.compone
         SideMenuComponent,
         HeaderComponent,
         MainComponent,
-        FooterComponent
+        FooterComponent,
+        BreadcrumbComponent
     ],
     imports: [
         CommonModule,
