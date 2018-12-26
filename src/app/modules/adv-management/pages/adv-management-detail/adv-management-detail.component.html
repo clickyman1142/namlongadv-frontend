@@ -1,5 +1,5 @@
 <div class="adv-detail" fxLayout="row">
-  <mat-card fxFlex="1 1 75%">
+  <mat-card fxFlex="1 1 80%">
     <mat-card-title>Tạo mới địa điểm</mat-card-title>
     <mat-card-content fxLayout="column">
       <div class="basic-info" fxLayout="column">
@@ -116,21 +116,26 @@
         </mat-card>
       </div>
     </mat-card-content>
-    <mat-card-actions>
+    <mat-card-actions fxLayoutAlign="flex-end">
       <button mat-flat-button color="warn">Cancel</button>
       <button mat-flat-button color="primary">Save</button>
     </mat-card-actions>
   </mat-card>
-  <div class="media" fxLayout="column" fxFlex="1 1 25%">
+  <div class="media" fxLayout="column" fxFlex="1 1 20%">
     <mat-card class="normal">
       <mat-card-title>Hình ảnh</mat-card-title>
       <mat-card-content fxLayout="column">
         <div cdkDropList class="images" (cdkDropListDropped)="drop($event)">
-          <div class="image" *ngFor="let movie of movies" cdkDrag>
+          <div class="image" *ngFor="let movie of movies" cdkDrag fxLayout="column">
+            <div class="image-placeholder" *cdkDragPlaceholder></div>
+            <div class="image-actions">
+              <mat-checkbox></mat-checkbox>
+              <mat-icon>delete_outline</mat-icon>
+            </div>
             <img src="https://picsum.photos/100/100/?random"/>
           </div>
         </div>
-        <input type="file" />
+        <input type="file" [ngStyle]="{marginTop: '10px'}"/>
       </mat-card-content>
     </mat-card>
     <mat-card class="map" [ngStyle]="{marginTop: '10px'}">

@@ -1,0 +1,26 @@
+<div class="login-container" fxLayoutAlign="center center" fxFlex="1 1 auto">
+    <mat-card class="login-form" fxLayout="column">
+        <form (submit)="onLogin()" [formGroup]="loginForm" #login="ngForm" fxLayout="column">
+            <mat-card-title [ngStyle]="{textAlign: 'center'}">NamLongAdv</mat-card-title>
+            <mat-card-content fxLayout="column">
+                <mat-form-field>
+                    <input matInput formControlName="username" placeholder="Tên đăng nhập">
+                    <mat-error *ngIf="submitted && loginFormControls.username.errors && loginFormControls.username.errors.required">
+                        Vui lòng nhập Tên đăng nhập
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field>
+                    <input matInput formControlName="password" [type]="hidePassword ? 'password' : 'text'" placeholder="Mật khẩu">
+                    <mat-icon matSuffix (click)="hidePassword = !hidePassword">{{hidePassword ? 'visibility' :
+                        'visibility_off'}}</mat-icon>
+                    <mat-error *ngIf="submitted && loginFormControls.password.errors && loginFormControls.password.errors.required">
+                        Vui lòng nhập Mật khẩu
+                    </mat-error>
+                </mat-form-field>
+            </mat-card-content>
+            <mat-card-actions fxLayoutAlign="center center">
+                <button [disabled]="loading || login.form.invalid" type="submit" mat-flat-button color="primary">Login</button>
+            </mat-card-actions>
+        </form>
+    </mat-card>
+</div>

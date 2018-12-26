@@ -8,6 +8,7 @@ import { HeaderComponent } from '../../shared/components/header/header.component
 import { MainComponent } from '../../shared/components/main/main.component';
 import { FooterComponent } from 'src/app/shared/components/footer/footer.component';
 import { BreadcrumbComponent } from 'src/app/shared/components/breadcrumb/breadcrumb.component';
+import { AuthGuard } from '../authorize/guards/auth.guard';
 
 @NgModule({
     declarations: [
@@ -25,6 +26,9 @@ import { BreadcrumbComponent } from 'src/app/shared/components/breadcrumb/breadc
     ],
     exports: [
         HomeComponent
+    ],
+    providers: [
+        AuthGuard
     ]
 })
 export class HomeModule {

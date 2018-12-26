@@ -1,9 +1,7 @@
 <div class="nav-container">
     <ul>
-        <li routerLink="/adv-management" routerLinkActive="active"><button mat-stroked-button>Quản lý địa điểm</button></li>
-        <li routerLink="/company-management" routerLinkActive="active"><button mat-stroked-button>Quản lý công ty</button></li>
-        <li routerLink="/customer-management" routerLinkActive="active"><button mat-stroked-button>Quản lý khách hàng</button></li>
-        <li routerLink="/user-management" routerLinkActive="active"><button mat-stroked-button>Quản lý tài khoản</button></li>
-        <li routerLink="/settings" routerLinkActive="active"><button mat-stroked-button>Cài đặt</button></li>
+        <li *ngFor="let item of menuItems" routerLink="/{{item.route}}" routerLinkActive="active">
+            <button mat-stroked-button>{{item.name}}</button>
+        </li>
     </ul>
 </div>

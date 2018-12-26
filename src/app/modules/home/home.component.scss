@@ -2,7 +2,6 @@
     .drawer-container {
         height: calc(100vh - 50px);
         mat-drawer {
-            min-width: 40px;
             visibility: visible !important;
             background-color: #253135;
         }

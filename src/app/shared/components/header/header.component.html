@@ -1,5 +1,5 @@
 <header class="header-container" fxLayout="row wrap" fxLayoutAlign="space-between">
-    <mat-icon svgIcon="toggleMenuIcon" (click)="sideMenu.toggle()"></mat-icon>
+    <mat-icon svgIcon="toggleMenuIcon" (click)="sideMenu.toggle()" [ngClass]="sideMenu.opened && 'opened'"></mat-icon>
     <div class="actions" fxLayout="row" fxLayoutAlign="center center">
         <button class="matMenu" mat-stroked-button [matMenuTriggerFor]="menu">
             <img src="../../../../assets/images/avatar.png" class="avatar">
@@ -10,7 +10,7 @@
                 <mat-icon>voicemail</mat-icon>
                 <span>Profile</span>
             </button>
-            <button mat-menu-item>
+            <button mat-menu-item routerLink="/login">
                 <mat-icon>voicemail</mat-icon>
                 <span>Logout</span>
             </button>

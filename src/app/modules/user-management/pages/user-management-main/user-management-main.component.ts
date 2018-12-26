@@ -1,17 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource, MatPaginator } from '@angular/material';
 
-const ELEMENT_DATA: PeriodicElement[] = [
-  { position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H' },
-  { position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H' },
-  { position: 2, name: 'Helium', weight: 4.0026, symbol: 'He' },
-  { position: 2, name: 'Helium', weight: 4.0026, symbol: 'He' },
-  { position: 3, name: 'Lithium', weight: 6.941, symbol: 'Li' },
-  { position: 3, name: 'Lithium', weight: 6.941, symbol: 'Li' },
-  { position: 4, name: 'Beryllium', weight: 9.0122, symbol: 'Be' },
-  { position: 4, name: 'Beryllium', weight: 9.0122, symbol: 'Be' },
-  { position: 5, name: 'Boron', weight: 10.811, symbol: 'B' },
-  { position: 5, name: 'Boron', weight: 10.811, symbol: 'B' }
+const ELEMENT_DATA: User[] = [
+  { username: 'nguyenminhtri', name: 'Nguyen Minh Tri', department: 'Kinh doanh', phone: '', email: '' },
 ];
 
 @Component({
@@ -21,8 +12,8 @@ const ELEMENT_DATA: PeriodicElement[] = [
 })
 export class UserManagementMainComponent implements OnInit {
 
-  displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
-  dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
+  displayedColumns: string[] = ['position', 'username', 'name', 'department', 'phone', 'email'];
+  dataSource = new MatTableDataSource<User>(ELEMENT_DATA);
   panelOpenState = false;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -33,9 +24,10 @@ export class UserManagementMainComponent implements OnInit {
 
 }
 
-export interface PeriodicElement {
+export interface User {
+  username: string;
   name: string;
-  position: number;
-  weight: number;
-  symbol: string;
+  department: string;
+  phone: string;
+  email: string;
 }

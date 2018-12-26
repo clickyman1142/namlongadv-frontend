@@ -1,6 +1,6 @@
 <app-header [sideMenu]="drawer"></app-header>
-<mat-drawer-container class="drawer-container" [hasBackdrop]="false">
-    <mat-drawer #drawer [mode]="'side'" class="drawer-side">
+<mat-drawer-container class="drawer-container" [hasBackdrop]="true">
+    <mat-drawer #drawer [mode]="'push'" class="drawer-side">
         <app-sidemenu></app-sidemenu>
     </mat-drawer>
     <mat-drawer-content fxLayout="column">
