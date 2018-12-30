@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
+import { AuthService } from '../../services/auth.service';
+import { Router } from '@angular/router';
+import { AppConfig } from 'src/app/config/app.config';
 
 @Component({
     selector: 'app-login',
@@ -14,7 +17,11 @@ export class LoginComponent implements OnInit {
     credentials: Credentials;
     submitted: boolean;
 
-    constructor(private formBuilder: FormBuilder) {
+    constructor(
+        private formBuilder: FormBuilder,
+        private authService: AuthService,
+        private router: Router
+    ) {
         this.credentials = {
             username: '',
             password: ''
@@ -30,7 +37,16 @@ export class LoginComponent implements OnInit {
 
     onLogin() {
         this.submitted = true;
-        console.log(this.loginForm.value);
+        const credentials = this.loginForm.value;
+        this.authService.login(credentials.username, credentials.password).subscribe(
+            res => {
+                console.log('redirect to home');
+                this.router.navigate([AppConfig.routes.home]);
+            },
+            err => {
+                // TODO: handle error
+            }
+        );
     }
 
     get loginFormControls() {

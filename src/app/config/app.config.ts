@@ -1,5 +1,5 @@
 import {InjectionToken} from '@angular/core';
-import { environment } from 'src/environments/environment.prod';
+import { environment } from 'src/environments/environment';
 
 export let APP_CONFIG = new InjectionToken('app.config');
 
@@ -17,7 +17,8 @@ export const AppConfig = {
         settings: 'settings'
     },
     endpoints: {
-        uaa: environment
+        uaa: environment.uaa,
+        user: environment.user
     },
     generalConfig: {
         dateFormat: 'DD/MM/YYYY',
@@ -25,7 +26,7 @@ export const AppConfig = {
         pageSize: 1000,
         basicAuth: {
             username: 'namlongAdv-client',
-            password: '***'
+            password: '$2a$04$3z7DmA5Km6XRUc.jCqjQrupyTZH0waHJRyklNNXFIU050w0cQJ442'
         }
     }
-}
+};

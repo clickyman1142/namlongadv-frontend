@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { LoginComponent } from './pages/login/login.component';
 import { AuthorizeRoutingModule } from './authorize-routing.module';
 import { SharedModule } from 'src/app/shared/shared.module';
-import { AuthService } from './services/AuthService';
+import { AuthService } from './services/auth.service';
 import { AuthGuard } from './guards/auth.guard';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 

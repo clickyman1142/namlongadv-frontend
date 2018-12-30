@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { MatIconRegistry } from '@angular/material';
 
@@ -9,7 +9,7 @@ import { MatIconRegistry } from '@angular/material';
         './header.component.scss'
     ]
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent {
     @Input() sideMenu;
 
     constructor(iconRegistry: MatIconRegistry, sanitizer: DomSanitizer) {
@@ -17,9 +17,5 @@ export class HeaderComponent implements OnInit {
             'toggleMenuIcon',
             sanitizer.bypassSecurityTrustResourceUrl('../assets/icons/baseline-view_list-24px.svg')
         );
-    }
-
-    ngOnInit() {
-        console.log(this.sideMenu)
     }
 }

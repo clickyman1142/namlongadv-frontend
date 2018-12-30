@@ -6,6 +6,8 @@ import { UserManagementMainComponent } from './pages/user-management-main/user-m
 import { SharedModule } from 'src/app/shared/shared.module';
 import { UserManagementDetailComponent } from './pages/user-management-detail/user-management-detail.component';
 import { UserManagementComponent } from './user-management.component';
+import { UserService } from './shared/user.service';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -16,7 +18,12 @@ import { UserManagementComponent } from './user-management.component';
   imports: [
     CommonModule,
     SharedModule,
-    UserManagementRoutingModule
+    UserManagementRoutingModule,
+    FormsModule,
+    ReactiveFormsModule
+  ],
+  providers: [
+    UserService
   ]
 })
 export class UserManagementModule { }
