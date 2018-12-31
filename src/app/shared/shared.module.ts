@@ -4,6 +4,8 @@ import { MaterialModule } from './modules/material.module';
 import { FormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { HttpUtils } from './utils/http.util';
+import { DialogComponent } from './components/dialog/dialog.component';
+import { Dialog } from './services/dialog.service';
 
 @NgModule({
     imports: [
@@ -18,9 +20,15 @@ import { HttpUtils } from './utils/http.util';
         FormsModule,
         FlexLayoutModule
     ],
-    declarations: [],
+    declarations: [
+        DialogComponent
+    ],
+    entryComponents: [
+        DialogComponent
+    ],
     providers: [
-        HttpUtils
+        HttpUtils,
+        Dialog
     ]
 })
 export class SharedModule {

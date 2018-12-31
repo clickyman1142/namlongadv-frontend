@@ -1,6 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource, MatPaginator } from '@angular/material';
 import { UserService } from '../../shared/user.service';
+import { Spinner } from 'src/app/shared/services/spinner.service';
+import { Dialog } from 'src/app/shared/services/dialog.service';
 
 const ELEMENT_DATA: User[] = [
   { username: 'nguyenminhtri', name: 'Nguyen Minh Tri', department: 'Kinh doanh', phone: '', email: '' },
@@ -24,27 +26,44 @@ export class UserManagementMainComponent implements OnInit {
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
-  constructor(private userService: UserService) { }
+  constructor(
+    private userService: UserService,
+    private spinner: Spinner,
+    private dialog: Dialog
+  ) { }
 
   ngOnInit() {
+    this.spinner.show();
     this.userService.getAll(0, 10).subscribe(rs => {
-      this.users = rs.data;
-      this.buildTable();
+      this.users = rs.data.data;
+      this.buildDataTable();
+      this.spinner.hide();
     });
   }
 
-  buildTable() {
+  buildDataTable() {
     this.dataSource = new MatTableDataSource<User>(this.users);
     this.dataSource.paginator = this.paginator;
   }
 
   deleteUser(index: number, userId: string) {
-    this.userService.delete(userId).subscribe(rs => {
+    const params = {
+      title: 'Xác nhận xóa',
+      message: 'Bạn có chắc muốn xóa tài khoản này ra khỏi hệ thống?'
+    };
+    this.dialog.confirm(params).then(rs => {
       if (!rs) { return; }
-      this.users = this.users.splice(index - 1, 1);
-      this.dataSource.data = this.users;
-      this.dataSource = new MatTableDataSource<User>(this.dataSource.data);
+      this.userService.delete(userId).subscribe(res => {
+        if (!res.data) { return; }
+        const data = this.dataSource.data;
+        data.splice((this.paginator.pageIndex * this.paginator.pageSize) + index, 1);
+        this.dataSource.data = data;
+      });
     });
+  }
+
+  filter(filterValue: string) {
+    this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
 }

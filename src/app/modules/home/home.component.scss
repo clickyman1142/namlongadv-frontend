@@ -8,8 +8,11 @@
         /deep/ .mat-drawer-inner-container {
             overflow-x: hidden;
         }
-        .wrapper {
+        .content-wrapper {
             padding: 10px 10px 0 10px;
         }
+    }
+    .undisplayed {
+        display: none !important;
     }
 }

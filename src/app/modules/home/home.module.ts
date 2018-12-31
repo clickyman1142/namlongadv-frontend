@@ -9,6 +9,9 @@ import { MainComponent } from '../../shared/components/main/main.component';
 import { FooterComponent } from 'src/app/shared/components/footer/footer.component';
 import { BreadcrumbComponent } from 'src/app/shared/components/breadcrumb/breadcrumb.component';
 import { AuthGuard } from '../authorize/guards/auth.guard';
+import { Spinner } from 'src/app/shared/services/spinner.service';
+import { SpinnerComponent } from 'src/app/shared/components/spinner/spinner.component';
+import { SnackBar } from 'src/app/shared/services/snackbar.service';
 
 @NgModule({
     declarations: [
@@ -17,7 +20,8 @@ import { AuthGuard } from '../authorize/guards/auth.guard';
         HeaderComponent,
         MainComponent,
         FooterComponent,
-        BreadcrumbComponent
+        BreadcrumbComponent,
+        SpinnerComponent
     ],
     imports: [
         CommonModule,
@@ -28,7 +32,9 @@ import { AuthGuard } from '../authorize/guards/auth.guard';
         HomeComponent
     ],
     providers: [
-        AuthGuard
+        AuthGuard,
+        Spinner,
+        SnackBar
     ]
 })
 export class HomeModule {

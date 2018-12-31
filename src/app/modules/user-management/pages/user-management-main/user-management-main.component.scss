@@ -5,4 +5,12 @@
     .users {
         margin: 20px 0;
     }
+    .mat-column-actions {
+        mat-icon {
+            cursor: pointer;
+            &:hover {
+                color: #0688B2;
+            }
+        }
+    }
 }

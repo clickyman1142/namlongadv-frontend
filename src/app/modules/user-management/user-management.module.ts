@@ -8,6 +8,7 @@ import { UserManagementDetailComponent } from './pages/user-management-detail/us
 import { UserManagementComponent } from './user-management.component';
 import { UserService } from './shared/user.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { UserRoleService } from './shared/user-role.service';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     ReactiveFormsModule
   ],
   providers: [
-    UserService
+    UserService,
+    UserRoleService
   ]
 })
 export class UserManagementModule { }

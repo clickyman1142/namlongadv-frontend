@@ -18,7 +18,8 @@ export const AppConfig = {
     },
     endpoints: {
         uaa: environment.uaa,
-        user: environment.user
+        user: environment.user,
+        userRole: environment.userRole
     },
     generalConfig: {
         dateFormat: 'DD/MM/YYYY',
@@ -27,6 +28,7 @@ export const AppConfig = {
         basicAuth: {
             username: 'namlongAdv-client',
             password: '$2a$04$3z7DmA5Km6XRUc.jCqjQrupyTZH0waHJRyklNNXFIU050w0cQJ442'
-        }
+        },
+        snackBarDuration: 1500
     }
 };

@@ -5,7 +5,8 @@
 export const environment = {
   production: false,
   uaa: 'http://localhost:8080/management/oauth/token',
-  user: 'http://localhost:8080/management/users'
+  user: 'http://localhost:8080/management/users',
+  userRole: 'http://localhost:8080/management/userRoles'
 };
 
 /*

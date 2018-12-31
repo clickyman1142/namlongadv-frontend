@@ -1,13 +1,16 @@
 <app-header [sideMenu]="drawer"></app-header>
 <mat-drawer-container class="drawer-container" [hasBackdrop]="true">
     <mat-drawer #drawer [mode]="'push'" class="drawer-side">
-        <app-sidemenu></app-sidemenu>
+        <app-sidemenu [sideMenu]="drawer"></app-sidemenu>
     </mat-drawer>
     <mat-drawer-content fxLayout="column">
-        <div class="wrapper" fxLayout="column" fxFlex="1 1 auto">
-            <app-breadcrumb></app-breadcrumb>
-            <app-main fxFlex="1 1 auto"></app-main>
+        <div fxLayout="column" fxFlex="1 1 auto">
+            <div class="content-wrapper" fxLayout="column" fxFlex="1 1 auto">
+                <app-breadcrumb></app-breadcrumb>
+                <app-main fxFlex="1 1 auto"></app-main>
+            </div>
             <app-footer></app-footer>
         </div>
     </mat-drawer-content>
 </mat-drawer-container>
+<app-spinner fxLayoutAlign="center center" class="undisplayed"></app-spinner>

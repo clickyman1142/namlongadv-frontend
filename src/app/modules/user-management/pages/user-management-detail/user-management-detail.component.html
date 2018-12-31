@@ -1,19 +1,28 @@
 <div class="user-detail" fxLayout="row">
   <mat-card fxFlex="1 1 60%">
-    <form [formGroup]="userForm" #f="ngForm" (submit)="onSave()">
+    <form [formGroup]="userForm" #f="ngForm" (submit)="onSave()" autocomplete="off">
       <mat-card-title>{{user.id ? 'Cập nhật tài khoản' : 'Tạo mới tài khoản '}}</mat-card-title>
       <mat-card-content fxLayout="column">
         <div class="basic-info" fxLayout="column">
           <mat-form-field>
-            <input matInput placeholder="Tên đăng nhập" formControlName="username">
+            <input matInput placeholder="Tên đăng nhập *" formControlName="username">
           </mat-form-field>
           <mat-form-field>
-            <input matInput formControlName="password" [type]="hidePassword ? 'password' : 'text'" placeholder="Mật khẩu">
-            <mat-icon matSuffix (click)="hidePassword = !hidePassword">{{hidePassword ? 'visibility' :
+            <input matInput formControlName="password" autocomplete="new-password" 
+              [type]="hidePassword || user.id ? 'password' : 'text'"
+              placeholder="Mật khẩu *" [readOnly]="user.id">
+            <mat-icon matSuffix *ngIf="!user.id" (click)="hidePassword = !hidePassword">{{hidePassword ? 'visibility' :
               'visibility_off'}}</mat-icon>
           </mat-form-field>
+          <mat-form-field *ngIf="user.id">
+            <input matInput formControlName="newPassword" autocomplete="new-password" [type]="hidePassword ? 'password' : 'text'"
+              placeholder="Mật khẩu mới *">
+            <mat-icon matSuffix (click)="hidePassword = !hidePassword">{{hidePassword ? 'visibility' :
+              'visibility_off'}}</mat-icon>
+            <mat-hint>Nhập để thay đổi mật khẩu</mat-hint>
+          </mat-form-field>
           <mat-form-field>
-            <input matInput placeholder="Tên" formControlName="name">
+            <input matInput placeholder="Tên *" formControlName="name">
           </mat-form-field>
           <mat-form-field>
             <input matInput placeholder="Phòng ban" formControlName="department">
@@ -22,16 +31,19 @@
             <input matInput placeholder="Số điện thoại" formControlName="phone">
           </mat-form-field>
           <mat-form-field>
-            <input matInput placeholder="Email" formControlName="email">
+            <input matInput placeholder="Email *" autocomplete="nope" formControlName="email">
           </mat-form-field>
           <mat-form-field>
-            <input matInput placeholder="Quyền">
+            <mat-select placeholder="Quyền *" formControlName="role">
+              <mat-option>None</mat-option>
+              <mat-option *ngFor="let role of userRoles" [value]="role.id">{{role.name}}</mat-option>
+            </mat-select>
           </mat-form-field>
         </div>
       </mat-card-content>
       <mat-card-actions fxLayoutAlign="flex-end">
-        <button mat-flat-button color="warn" (click)="_location.back()" type="button">Cancel</button>
-        <button mat-flat-button color="primary" type="submit" [disabled]="f.form.invalid">Save</button>
+        <button mat-raised-button color="warn" (click)="_location.back()" type="button">Cancel</button>
+        <button mat-raised-button color="primary" type="submit" [disabled]="f.form.invalid">Save</button>
       </mat-card-actions>
     </form>
   </mat-card>

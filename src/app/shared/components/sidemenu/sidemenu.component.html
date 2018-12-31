@@ -1,6 +1,6 @@
 <div class="nav-container">
     <ul>
-        <li *ngFor="let item of menuItems" routerLink="/{{item.route}}" routerLinkActive="active">
+        <li *ngFor="let item of menuItems" routerLink="/{{item.route}}" (click)="sideMenu.toggle()" routerLinkActive="active">
             <button mat-stroked-button>{{item.name}}</button>
         </li>
     </ul>

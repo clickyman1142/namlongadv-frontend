@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, Input } from '@angular/core';
 import { APP_CONFIG, AppConfig } from '../../../config/app.config';
 
 @Component({
@@ -12,6 +12,7 @@ import { APP_CONFIG, AppConfig } from '../../../config/app.config';
     ]
 })
 export class SideMenuComponent implements OnInit {
+    @Input() sideMenu;
     appConfig: any;
     menuItems = [];
 
