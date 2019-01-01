@@ -19,7 +19,8 @@ export const AppConfig = {
     endpoints: {
         uaa: environment.uaa,
         user: environment.user,
-        userRole: environment.userRole
+        userRole: environment.userRole,
+        advert: environment.advert
     },
     generalConfig: {
         dateFormat: 'DD/MM/YYYY',

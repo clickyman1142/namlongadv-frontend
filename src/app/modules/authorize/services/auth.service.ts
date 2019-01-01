@@ -23,7 +23,6 @@ export class AuthService {
         const expiresIn = this.storage.get('expires_in');
         let isLegalAccount = false;
         if (userInfo && accessToken && expiresIn) {
-            console.log(moment().unix());
             isLegalAccount = expiresIn - moment().unix() > 0;
             if (!isLegalAccount) {
                 this.logout();

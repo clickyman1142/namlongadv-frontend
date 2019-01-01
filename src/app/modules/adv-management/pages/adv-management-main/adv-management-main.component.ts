@@ -1,18 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource, MatPaginator } from '@angular/material';
-
-const ELEMENT_DATA: PeriodicElement[] = [
-  { position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H' },
-  { position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H' },
-  { position: 2, name: 'Helium', weight: 4.0026, symbol: 'He' },
-  { position: 2, name: 'Helium', weight: 4.0026, symbol: 'He' },
-  { position: 3, name: 'Lithium', weight: 6.941, symbol: 'Li' },
-  { position: 3, name: 'Lithium', weight: 6.941, symbol: 'Li' },
-  { position: 4, name: 'Beryllium', weight: 9.0122, symbol: 'Be' },
-  { position: 4, name: 'Beryllium', weight: 9.0122, symbol: 'Be' },
-  { position: 5, name: 'Boron', weight: 10.811, symbol: 'B' },
-  { position: 5, name: 'Boron', weight: 10.811, symbol: 'B' }
-];
+import { AdvertService } from '../../shared/advert.service';
+import { Spinner } from 'src/app/shared/services/spinner.service';
 
 @Component({
   selector: 'app-adv-management-main',
@@ -21,14 +10,44 @@ const ELEMENT_DATA: PeriodicElement[] = [
 })
 export class AdvManagementMainComponent implements OnInit {
 
-  displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
-  dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
+  displayedColumns: string[] = ['position', 'code', 'title', 'address', 'size', 'createdDate', 'subTitle', 'contact', 'images'];
+  dataSource: MatTableDataSource<any>;
   panelOpenState = false;
+  pageSizeOptions = [10, 50, 100, 500, 1000, 5000, 10000];
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
+  constructor(
+    private advertService: AdvertService,
+    private spinner: Spinner
+  ) {}
+
   ngOnInit() {
-    this.dataSource.paginator = this.paginator;
+    this.spinner.show();
+    const searchForm = {
+      code: null,
+      address: null,
+      createdBy: null,
+      contactPerson: null,
+      houseNo: null,
+      street: null,
+      ward: null,
+      district: null,
+      provinceCode: null,
+      title: null,
+      from: '2018-01-01T13:59:26.456Z',
+      to: '2019-01-01T13:59:26.456Z',
+      pageRequestDTO: {
+        page: 0,
+        size: 30
+      },
+      roles: []
+    };
+    this.advertService.getAll(searchForm).subscribe(res => {
+      this.dataSource = new MatTableDataSource<any>(res.data.data);
+      this.dataSource.paginator = this.paginator;
+      this.spinner.hide();
+    });
   }
 
 }
