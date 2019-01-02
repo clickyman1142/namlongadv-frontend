@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource, MatPaginator } from '@angular/material';
 import { AdvertService } from '../../shared/advert.service';
 import { Spinner } from 'src/app/shared/services/spinner.service';
+import { SearchForm } from 'src/app/shared/models/search-form';
 
 @Component({
   selector: 'app-adv-management-main',
@@ -15,6 +16,59 @@ export class AdvManagementMainComponent implements OnInit {
   panelOpenState = false;
   pageSizeOptions = [10, 50, 100, 500, 1000, 5000, 10000];
 
+  searchCriterias = {
+    code: {
+      key: 'code',
+      operation: 'LIKE',
+      value: ''
+    },
+    companyNameSearching: {
+      key: 'companyNameSearching',
+      operation: 'LIKE',
+      value: ''
+    },
+    createdBy: {
+      key: 'createdBy',
+      operation: 'EQUALITY',
+      value: ''
+    },
+    addressSearching: {
+      key: 'addressSearching',
+      operation: 'LIKE',
+      value: ''
+    },
+    titleSearching: {
+      key: 'titleSearching',
+      operation: 'LIKE',
+      value: ''
+    },
+    houseNoSearching: {
+      key: 'houseNoSearching',
+      operation: 'EQUALITY',
+      value: ''
+    },
+    streetSearching: {
+      key: 'streetSearching',
+      operation: 'EQUALITY',
+      value: ''
+    },
+    wardSearching: {
+      key: 'wardSearching',
+      operation: 'EQUALITY',
+      value: ''
+    },
+    districtSearching: {
+      key: 'districtSearching',
+      operation: 'EQUALITY',
+      value: ''
+    },
+    provinceSearching: {
+      key: 'provinceSearching',
+      operation: 'EQUALITY',
+      value: ''
+    },
+  };
+
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
   constructor(
@@ -23,33 +77,27 @@ export class AdvManagementMainComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.paginator.pageIndex = 1;
+    this.paginator.pageSize = 10;
+    this.doFilter();
+  }
+
+  doFilter() {
     this.spinner.show();
-    const searchForm = {
-      code: null,
-      address: null,
-      createdBy: null,
-      contactPerson: null,
-      houseNo: null,
-      street: null,
-      ward: null,
-      district: null,
-      provinceCode: null,
-      title: null,
-      from: '2018-01-01T13:59:26.456Z',
-      to: '2019-01-01T13:59:26.456Z',
-      pageRequestDTO: {
-        page: 0,
-        size: 30
-      },
-      roles: []
-    };
-    this.advertService.getAll(searchForm).subscribe(res => {
+    this.advertService.getAll(this.buildSearchCriteria(), this.paginator.pageIndex + 1, this.paginator.pageSize).subscribe(res => {
       this.dataSource = new MatTableDataSource<any>(res.data.data);
       this.dataSource.paginator = this.paginator;
       this.spinner.hide();
     });
   }
 
+  buildSearchCriteria() {
+    return Object.keys(this.searchCriterias).filter(key => {
+      return this.searchCriterias[key].value !== '';
+    }).map(key => {
+      return this.searchCriterias[key];
+    });
+  }
 }
 
 export interface PeriodicElement {

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AdvertSearchForm } from 'src/app/shared/models/advert-search-form';
+import { SearchForm } from 'src/app/shared/models/search-form';
 import { HttpUtils } from 'src/app/shared/utils/http.util';
 import { AppConfig } from 'src/app/config/app.config';
 
@@ -9,7 +9,14 @@ import { AppConfig } from 'src/app/config/app.config';
 export class AdvertService {
     constructor(private httpClient: HttpUtils) {}
 
-    getAll(searchForm: AdvertSearchForm) {
-        return this.httpClient.post(`${AppConfig.endpoints.advert}/search`, searchForm);
+    getAll(filter: SearchForm[], page: number, size: number) {
+        const options = {
+            params: {
+                page,
+                size,
+                filter: JSON.stringify(filter)
+            }
+        };
+        return this.httpClient.get(`${AppConfig.endpoints.advert}/search`, options);
     }
 }

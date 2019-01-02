@@ -12,8 +12,9 @@
       </mat-expansion-panel-header>
       <mat-panel-description fxLayout="row" fxFlex="wrap" >
         <mat-form-field>
-          <input matInput placeholder="Mã">
+          <input matInput placeholder="Địa chỉ" [(ngModel)]="searchCriterias.addressSearching.value">
         </mat-form-field>
+        <button mat-raised-button color="warn" (click)="doFilter()">Lọc</button>
       </mat-panel-description>
     </mat-expansion-panel>
   </mat-accordion>
@@ -42,7 +43,7 @@
       <!-- Symbol Column -->
       <ng-container matColumnDef="address">
         <th mat-header-cell *matHeaderCellDef> Địa chỉ </th>
-        <td mat-cell *matCellDef="let element">{{element.street}}</td>
+        <td mat-cell *matCellDef="let element">{{element.houseNo}} - {{element.street}} - {{element.ward}} - {{element.district}} - {{element.province}}</td>
       </ng-container>
 
       <ng-container matColumnDef="size">
@@ -66,8 +67,8 @@
       <ng-container matColumnDef="contact">
         <th mat-header-cell *matHeaderCellDef> Liên hệ </th>
         <td mat-cell *matCellDef="let element">
-          <div>{{element.ownerContactPerson}}</div>
-          <div>{{element.advCompContactPerson}}</div>
+          <div>{{element.ownerContactPerson}} A</div>
+          <div>{{element.advCompContactPerson}} A</div>
         </td>
       </ng-container>
 
