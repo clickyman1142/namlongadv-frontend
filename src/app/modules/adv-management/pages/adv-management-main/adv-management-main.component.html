@@ -10,11 +10,20 @@
           Lọc
         </mat-panel-title>
       </mat-expansion-panel-header>
-      <mat-panel-description fxLayout="row" fxFlex="wrap" >
-        <mat-form-field>
-          <input matInput placeholder="Địa chỉ" [(ngModel)]="searchCriterias.addressSearching.value">
+      <mat-panel-description fxLayout="column" fxFlex="wrap" >
+        <div>
+          <mat-form-field class="example-full-width">
+            <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="picker" placeholder="Choose a date">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+        </div>
+        <div>
+        <mat-form-field *ngFor="let field of Object.keys(searchCriterias)" [style.marginLeft]="10">
+          <input matInput placeholder="{{searchCriterias[field].title}}" [(ngModel)]="searchCriterias[field].value">
         </mat-form-field>
-        <button mat-raised-button color="warn" (click)="doFilter()">Lọc</button>
+        </div>
+        <button mat-raised-button color="warn" (click)="buildDataTable(true)">Lọc</button>
       </mat-panel-description>
     </mat-expansion-panel>
   </mat-accordion>
@@ -81,7 +90,7 @@
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
 
-    <mat-paginator [pageSizeOptions]="pageSizeOptions" showFirstLastButtons></mat-paginator>
+    <mat-paginator [pageSizeOptions]="pageSizeOptions" showFirstLastButtons [length]="totalOfPages" (page)="buildDataTable()"></mat-paginator>
   </div>
 
   <div class="actions" fxLayout="row" fxLayoutAlign="flex-end">

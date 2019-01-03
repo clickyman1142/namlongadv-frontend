@@ -15,22 +15,27 @@ export class AdvManagementMainComponent implements OnInit {
   dataSource: MatTableDataSource<any>;
   panelOpenState = false;
   pageSizeOptions = [10, 50, 100, 500, 1000, 5000, 10000];
+  totalOfPages = 0;
+  Object = Object;
 
   searchCriterias = {
     code: {
       key: 'code',
       operation: 'LIKE',
-      value: ''
+      value: '',
+      title: 'Mã'
     },
-    companyNameSearching: {
-      key: 'companyNameSearching',
+    advCompNameSearching: {
+      key: 'advCompNameSearching',
       operation: 'LIKE',
-      value: ''
+      value: '',
+      title: 'Tên công ty'
     },
     createdBy: {
       key: 'createdBy',
       operation: 'EQUALITY',
-      value: ''
+      value: '',
+      title: 'Người tạo'
     },
     addressSearching: {
       key: 'addressSearching',
@@ -40,32 +45,38 @@ export class AdvManagementMainComponent implements OnInit {
     titleSearching: {
       key: 'titleSearching',
       operation: 'LIKE',
-      value: ''
+      value: '',
+      title: 'Tiêu đề'
     },
     houseNoSearching: {
       key: 'houseNoSearching',
       operation: 'EQUALITY',
-      value: ''
+      value: '',
+      title: 'Số nhà'
     },
     streetSearching: {
       key: 'streetSearching',
       operation: 'EQUALITY',
-      value: ''
+      value: '',
+      title: 'Tên đường'
     },
     wardSearching: {
       key: 'wardSearching',
       operation: 'EQUALITY',
-      value: ''
+      value: '',
+      title: 'Phường'
     },
     districtSearching: {
       key: 'districtSearching',
       operation: 'EQUALITY',
-      value: ''
+      value: '',
+      title: 'Quận'
     },
     provinceSearching: {
       key: 'provinceSearching',
       operation: 'EQUALITY',
-      value: ''
+      value: '',
+      title: 'Tỉnh'
     },
   };
 
@@ -77,16 +88,20 @@ export class AdvManagementMainComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.paginator.pageIndex = 1;
-    this.paginator.pageSize = 10;
-    this.doFilter();
+    this.buildDataTable(true);
   }
 
-  doFilter() {
+  buildDataTable(initPaginator?: boolean) {
+    const page = this.paginator.pageIndex ? this.paginator.pageIndex : 0;
+    const size = this.paginator.pageSize ? this.paginator.pageSize : 10;
     this.spinner.show();
-    this.advertService.getAll(this.buildSearchCriteria(), this.paginator.pageIndex + 1, this.paginator.pageSize).subscribe(res => {
+    this.advertService.getAll(this.buildSearchCriteria(), page + 1, size).subscribe(res => {
+      this.totalOfPages = res.data.count;
       this.dataSource = new MatTableDataSource<any>(res.data.data);
-      this.dataSource.paginator = this.paginator;
+      if (initPaginator) {
+        this.paginator.pageIndex = 0;
+        this.dataSource.paginator = this.paginator;
+      }
       this.spinner.hide();
     });
   }
@@ -98,11 +113,4 @@ export class AdvManagementMainComponent implements OnInit {
       return this.searchCriterias[key];
     });
   }
-}
-
-export interface PeriodicElement {
-  name: string;
-  position: number;
-  weight: number;
-  symbol: string;
 }
