@@ -5,4 +5,20 @@
     .advs {
         margin-bottom: 20px;
     }
+    .filter-panel {
+        .filter-group {
+            mat-form-field {
+                margin-right: 10px;
+                &:first-child {
+                    margin-left: 0;
+                }
+                &:last-child {
+                    margin-right: 0;
+                }
+            }
+        }
+    }
+    mat-panel-description {
+        margin: 0;
+    }
 }

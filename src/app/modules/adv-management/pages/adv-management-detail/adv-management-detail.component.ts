@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { AdvertService } from '../../shared/advert.service';
 
 @Component({
   selector: 'app-adv-management-detail',
@@ -17,7 +18,8 @@ export class AdvManagementDetailComponent implements OnInit {
   ];
 
   constructor(
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private advertService: AdvertService
   ) {
     this.advert = {
       id: '',
@@ -122,6 +124,9 @@ export class AdvManagementDetailComponent implements OnInit {
 
   onSave() {
     console.log(this.advertForm.value);
+    this.advertService.add(this.advertForm.value).subscribe(rs => {
+      console.log(rs);
+    });
   }
 
   get advertFormControls() {

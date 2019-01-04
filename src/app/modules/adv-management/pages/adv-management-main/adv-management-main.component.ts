@@ -2,7 +2,8 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource, MatPaginator } from '@angular/material';
 import { AdvertService } from '../../shared/advert.service';
 import { Spinner } from 'src/app/shared/services/spinner.service';
-import { SearchForm } from 'src/app/shared/models/search-form';
+import { SelectionModel } from '@angular/cdk/collections';
+import * as _moment from 'moment';
 
 @Component({
   selector: 'app-adv-management-main',
@@ -10,13 +11,17 @@ import { SearchForm } from 'src/app/shared/models/search-form';
   styleUrls: ['./adv-management-main.component.scss']
 })
 export class AdvManagementMainComponent implements OnInit {
+  _moment = _moment;
 
-  displayedColumns: string[] = ['position', 'code', 'title', 'address', 'size', 'createdDate', 'subTitle', 'contact', 'images'];
+  displayedColumns: string[] = ['select', 'position', 'code', 'title', 'address',
+    'size', 'createdDate', 'subTitle', 'contact', 'images'];
   dataSource: MatTableDataSource<any>;
+  selection = new SelectionModel<any>(true, []);
   panelOpenState = false;
   pageSizeOptions = [10, 50, 100, 500, 1000, 5000, 10000];
   totalOfPages = 0;
   Object = Object;
+  today = new Date();
 
   searchCriterias = {
     code: {
@@ -40,7 +45,8 @@ export class AdvManagementMainComponent implements OnInit {
     addressSearching: {
       key: 'addressSearching',
       operation: 'LIKE',
-      value: ''
+      value: '',
+      title: 'Địa chỉ'
     },
     titleSearching: {
       key: 'titleSearching',
@@ -77,7 +83,11 @@ export class AdvManagementMainComponent implements OnInit {
       operation: 'EQUALITY',
       value: '',
       title: 'Tỉnh'
-    },
+    }
+  };
+  dateRange = {
+    start: _moment('2018-01-01', 'YYYY-MM-DD').toDate(),
+    end: this.today
   };
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -107,10 +117,31 @@ export class AdvManagementMainComponent implements OnInit {
   }
 
   buildSearchCriteria() {
-    return Object.keys(this.searchCriterias).filter(key => {
+    const searchCriterias = Object.keys(this.searchCriterias).filter(key => {
       return this.searchCriterias[key].value !== '';
     }).map(key => {
       return this.searchCriterias[key];
     });
+    searchCriterias.push({
+      key: 'createdDate',
+      operation: 'BETWEEN',
+      value: JSON.stringify({
+        start: _moment(this.dateRange.start).format('DD/MM/YYYY'),
+        end: _moment(this.dateRange.end).format('DD/MM/YYYY')
+      })
+    });
+    return searchCriterias;
+  }
+
+  isAllSelected() {
+    const numSelected = this.selection.selected.length;
+    const numRows = this.dataSource.data.length;
+    return numSelected === numRows;
+  }
+
+  masterToggle() {
+    this.isAllSelected() ?
+        this.selection.clear() :
+        this.dataSource.data.forEach(row => this.selection.select(row));
   }
 }
