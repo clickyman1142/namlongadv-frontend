@@ -1,4 +1,6 @@
 export const DialogType = {
     CONFIRM: 'confirm',
-    INFO: 'info'
+    INFO: 'info',
+    ERROR: 'error',
+    WARNING: 'warning'
 }

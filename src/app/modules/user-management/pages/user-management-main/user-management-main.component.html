@@ -9,36 +9,31 @@
 
   <div class="mat-elevation-z8 users" fxLayout="column" fxFlex="1 1 auto">
     <table mat-table [dataSource]="dataSource">
-
-      <!-- Position Column -->
       <ng-container matColumnDef="position">
         <th mat-header-cell *matHeaderCellDef> STT </th>
         <td mat-cell *matCellDef="let element; let i = index"> {{i+1}} </td>
       </ng-container>
 
-      <!-- Name Column -->
       <ng-container matColumnDef="username">
         <th mat-header-cell *matHeaderCellDef> Tên Đăng Nhập </th>
         <td mat-cell *matCellDef="let element; let i = index"> {{element.username}} </td>
       </ng-container>
 
-      <!-- Weight Column -->
       <ng-container matColumnDef="name">
         <th mat-header-cell *matHeaderCellDef> Tên </th>
         <td mat-cell *matCellDef="let element"> {{element.name}} </td>
       </ng-container>
 
-      <!-- Symbol Column -->
       <ng-container matColumnDef="department">
         <th mat-header-cell *matHeaderCellDef> Phòng Ban </th>
         <td mat-cell *matCellDef="let element"> {{element.department}} </td>
       </ng-container>
-      <!-- Symbol Column -->
+
       <ng-container matColumnDef="phone">
         <th mat-header-cell *matHeaderCellDef> SĐT </th>
         <td mat-cell *matCellDef="let element"> {{element.phone}} </td>
       </ng-container>
-      <!-- Symbol Column -->
+
       <ng-container matColumnDef="email">
         <th mat-header-cell *matHeaderCellDef> Email </th>
         <td mat-cell *matCellDef="let element"> {{element.email}} </td>
@@ -46,7 +41,7 @@
 
       <ng-container matColumnDef="actions">
         <th mat-header-cell *matHeaderCellDef> # </th>
-        <td mat-cell *matCellDef="let element"> 
+        <td mat-cell *matCellDef="let element; let i = index"> 
           <mat-icon [routerLink]="['/user-management', element.id]">edit</mat-icon>
           <mat-icon (click)="deleteUser(i, element.id)">delete</mat-icon>
         </td>

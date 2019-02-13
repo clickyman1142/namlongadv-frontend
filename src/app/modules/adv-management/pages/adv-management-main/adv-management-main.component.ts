@@ -4,6 +4,8 @@ import { AdvertService } from '../../shared/advert.service';
 import { Spinner } from 'src/app/shared/services/spinner.service';
 import { SelectionModel } from '@angular/cdk/collections';
 import * as _moment from 'moment';
+import { ProvinceService } from 'src/app/shared/services/province.service';
+import { UserService } from 'src/app/modules/user-management/shared/user.service';
 
 @Component({
   selector: 'app-adv-management-main',
@@ -14,7 +16,7 @@ export class AdvManagementMainComponent implements OnInit {
   _moment = _moment;
 
   displayedColumns: string[] = ['select', 'position', 'code', 'title', 'address',
-    'size', 'createdDate', 'subTitle', 'contact', 'images'];
+    'size', 'createdDate', 'subTitle', 'contact', 'images', 'actions'];
   dataSource: MatTableDataSource<any>;
   selection = new SelectionModel<any>(true, []);
   panelOpenState = false;
@@ -28,61 +30,73 @@ export class AdvManagementMainComponent implements OnInit {
       key: 'code',
       operation: 'LIKE',
       value: '',
-      title: 'Mã'
+      title: 'Mã',
+      type: 'input'
     },
     advCompNameSearching: {
       key: 'advCompNameSearching',
       operation: 'LIKE',
       value: '',
-      title: 'Tên công ty'
+      title: 'Tên công ty',
+      type: 'input'
     },
     createdBy: {
       key: 'createdBy',
       operation: 'EQUALITY',
       value: '',
-      title: 'Người tạo'
+      title: 'Người tạo',
+      type: 'selection',
+      options: []
     },
     addressSearching: {
       key: 'addressSearching',
       operation: 'LIKE',
       value: '',
-      title: 'Địa chỉ'
+      title: 'Địa chỉ',
+      type: 'selection'
     },
     titleSearching: {
       key: 'titleSearching',
       operation: 'LIKE',
       value: '',
-      title: 'Tiêu đề'
+      title: 'Tiêu đề',
+      type: 'input'
     },
     houseNoSearching: {
       key: 'houseNoSearching',
       operation: 'EQUALITY',
       value: '',
-      title: 'Số nhà'
+      title: 'Số nhà',
+      type: 'input'
     },
     streetSearching: {
       key: 'streetSearching',
       operation: 'EQUALITY',
       value: '',
-      title: 'Tên đường'
+      title: 'Tên đường',
+      type: 'input'
     },
     wardSearching: {
       key: 'wardSearching',
       operation: 'EQUALITY',
       value: '',
-      title: 'Phường'
+      title: 'Phường',
+      type: 'input'
     },
     districtSearching: {
       key: 'districtSearching',
       operation: 'EQUALITY',
       value: '',
-      title: 'Quận'
+      title: 'Quận',
+      type: 'input'
     },
     provinceSearching: {
       key: 'provinceSearching',
       operation: 'EQUALITY',
       value: '',
-      title: 'Tỉnh'
+      title: 'Tỉnh',
+      type: 'selection',
+      options: []
     }
   };
   dateRange = {
@@ -94,11 +108,27 @@ export class AdvManagementMainComponent implements OnInit {
 
   constructor(
     private advertService: AdvertService,
-    private spinner: Spinner
-  ) {}
+    private spinner: Spinner,
+    private provinceService: ProvinceService,
+    private userService: UserService
+  ) { }
 
   ngOnInit() {
+    this.buildProvinceOptions();
+    this.buildUserOptions();
     this.buildDataTable(true);
+  }
+
+  buildProvinceOptions() {
+    this.provinceService.getAll().subscribe(rs => {
+      this.searchCriterias.provinceSearching.options = rs.data;
+    });
+  }
+
+  buildUserOptions() {
+    this.userService.getAll(0, -1).subscribe(rs => {
+      this.searchCriterias.createdBy.options = rs.data.data;
+    });
   }
 
   buildDataTable(initPaginator?: boolean) {
@@ -120,7 +150,11 @@ export class AdvManagementMainComponent implements OnInit {
     const searchCriterias = Object.keys(this.searchCriterias).filter(key => {
       return this.searchCriterias[key].value !== '';
     }).map(key => {
-      return this.searchCriterias[key];
+      return {
+        key: this.searchCriterias[key].key,
+        operation: this.searchCriterias[key].operation,
+        value: this.searchCriterias[key].value
+      };
     });
     searchCriterias.push({
       key: 'createdDate',
@@ -141,7 +175,7 @@ export class AdvManagementMainComponent implements OnInit {
 
   masterToggle() {
     this.isAllSelected() ?
-        this.selection.clear() :
-        this.dataSource.data.forEach(row => this.selection.select(row));
+      this.selection.clear() :
+      this.dataSource.data.forEach(row => this.selection.select(row));
   }
 }

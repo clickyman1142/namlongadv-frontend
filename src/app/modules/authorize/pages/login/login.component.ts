@@ -15,7 +15,9 @@ export class LoginComponent implements OnInit {
     hidePassword = true;
     loginForm: FormGroup;
     credentials: Credentials;
+    submitting: boolean;
     submitted: boolean;
+    errorMessage: string;
 
     constructor(
         private formBuilder: FormBuilder,
@@ -36,15 +38,18 @@ export class LoginComponent implements OnInit {
     }
 
     onLogin() {
-        this.submitted = true;
+        this.submitting = true;
         const credentials = this.loginForm.value;
         this.authService.login(credentials.username, credentials.password).subscribe(
             res => {
-                console.log('redirect to home');
+                this.submitted = true;
+                this.submitting = false;
                 this.router.navigate([AppConfig.routes.home]);
             },
             err => {
-                // TODO: handle error
+                this.submitted = true;
+                this.submitting = false;
+                this.errorMessage = 'Tên đăng nhập hoặc Mật khẩu không đúng';
             }
         );
     }

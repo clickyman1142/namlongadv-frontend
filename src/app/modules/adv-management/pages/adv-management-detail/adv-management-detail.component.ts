@@ -2,76 +2,112 @@ import { Component, OnInit } from '@angular/core';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { AdvertService } from '../../shared/advert.service';
+import { ActivatedRoute } from '@angular/router';
+import { Spinner } from 'src/app/shared/services/spinner.service';
+import * as moment from 'moment';
+
+import { MomentDateAdapter } from '@angular/material-moment-adapter';
+import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material';
+import { Dialog } from 'src/app/shared/services/dialog.service';
+import { TranslateService } from '@ngx-translate/core';
+
+export const MY_FORMATS = {
+  parse: {
+    dateInput: 'DD/MM/YYYY',
+  },
+  display: {
+    dateInput: 'DD/MM/YYYY',
+    monthYearLabel: 'MMM YYYY',
+    dateA11yLabel: 'LL',
+    monthYearA11yLabel: 'MMMM YYYY',
+  },
+};
 
 @Component({
   selector: 'app-adv-management-detail',
   templateUrl: './adv-management-detail.component.html',
-  styleUrls: ['./adv-management-detail.component.scss']
+  styleUrls: ['./adv-management-detail.component.scss'],
+  providers: [
+    { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },
+    { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS }
+  ]
 })
 export class AdvManagementDetailComponent implements OnInit {
   advert: Advert;
   advertForm: FormGroup;
-  movies = [
-    'Episode I - The Phantom Menace',
-    'Episode II - Attack of the Clones',
-    'Episode III - Revenge of the Sith'
-  ];
 
   constructor(
     private formBuilder: FormBuilder,
-    private advertService: AdvertService
-  ) {
-    this.advert = {
-      id: '',
-      code: '',
-      provinceCode: '',
-      title: '',
-      street: 'Đường ',
-      houseNo: 'Số ',
-      ward: '',
-      district: '',
-      province: '',
-      widthSize: 'm',
-      heightSize: 'm',
-      amount: '',
-      describe: '',
-      views: '',
-      flow: '',
-      implTime: 20,
-      implForm: 'in bạt hiflex 720 DPI',
-      lightSystem: '',
-      ownerPhone: '',
-      ownerEmail: '',
-      ownerPrice: '',
-      ownerContactPerson: '',
-      ownerStartDate: 132434,
-      ownerEndDate: 1234,
-      ownerNote: '',
-      advCompPhone: '',
-      advCompEmail: '',
-      advCompPrice: '',
-      advCompContactPerson: '',
-      advCompName: '',
-      advCompStartDate: 123434,
-      advCompEndDate: 123434,
-      advCompNote: '',
-      price: '',
-      createdBy: '',
-      createdDate: 134433,
-      updatedDate: 234234,
-      trash: false,
-      publishedDate: 123434,
-      publishedId: 132434,
-      type: '',
-      images: [],
-      prevImages: [],
-      map: undefined,
-      ignoreError: false
-    };
-  }
+    private advertService: AdvertService,
+    private activeRoute: ActivatedRoute,
+    private spinner: Spinner,
+    private dialog: Dialog,
+    private translate: TranslateService
+  ) { }
 
   ngOnInit() {
+    this.initFormData(null);
     this.buildForm();
+
+    const params = this.activeRoute.snapshot.params;
+    if (params) {
+      this.spinner.show();
+      this.advertService.findById(params.id).subscribe(rs => {
+        this.initFormData(rs.data);
+        this.buildForm();
+        this.spinner.hide();
+      });
+    }
+  }
+
+  initFormData(data) {
+    this.advert = {
+      id: data ? data.id : '',
+      code: data ? data.code : '',
+      provinceCode: data ? data.provinceCode : '',
+      title: data ? data.title : '',
+      street: data ? data.street : 'Đường ',
+      houseNo: data ? data.houseNo : 'Số ',
+      ward: data ? data.ward : '',
+      district: data ? data.district : '',
+      province: data ? data.province : '',
+      widthSize: data ? data.widthSize : 'm',
+      heightSize: data ? data.heightSize : 'm',
+      amount: data ? data.amount : '',
+      describe: data ? data.describe : '',
+      views: data ? data.views : '',
+      flow: data ? data.flow : '',
+      implTime: data ? data.implTime : 20,
+      implForm: data ? data.implForm : 'in bạt hiflex 720 DPI',
+      lightSystem: data ? data.lightSystem : '',
+      ownerPhone: data ? data.ownerPhone : '',
+      ownerEmail: data ? data.ownerEmail : '',
+      ownerPrice: data ? data.ownerPrice : '',
+      ownerContactPerson: data ? data.ownerContactPerson : '',
+      ownerStartDate: data ? (data.ownerStartDate ? moment(data.ownerStartDate) : undefined) : moment(),
+      ownerEndDate: data ? (data.ownerEndDate ? moment(data.ownerEndDate) : undefined) : moment(),
+      ownerNote: data ? data.ownerNote : '',
+      advCompPhone: data ? data.advCompPhone : '',
+      advCompEmail: data ? data.advCompEmail : '',
+      advCompPrice: data ? data.advCompPrice : '',
+      advCompContactPerson: data ? data.advCompContactPerson : '',
+      advCompName: data ? data.advCompName : '',
+      advCompStartDate: data ? (data.advCompStartDate ? moment(data.advCompStartDate) : undefined) : moment(),
+      advCompEndDate: data ? (data.advCompEndDate ? moment(data.advCompEndDate) : undefined) : moment(),
+      advCompNote: data ? data.advCompNote : moment(),
+      price: data ? data.price : 0,
+      createdBy: data ? data.createdBy : 0,
+      createdDate: data ? data.createdDate : 0,
+      updatedDate: data ? data.updatedDate : 0,
+      trash: data ? data.trash : false,
+      publishedDate: data ? (data.publishedDate ? moment(data.publishedDate) : undefined) : moment(),
+      publishedId: data ? data.publishedId : 0,
+      type: data ? data.type : '',
+      images: data ? data.images : [],
+      prevImages: data ? data.prevImages : [],
+      map: data ? data.map : undefined,
+      ignoreError: data ? data.ignoreError : undefined
+    };
   }
 
   buildForm() {
@@ -112,20 +148,34 @@ export class AdvManagementDetailComponent implements OnInit {
       advCompNote: this.advert.advCompNote,
       price: this.advert.price,
       createdBy: this.advert.createdBy,
-      images: [],
-      prevImages: [],
-      map: undefined
+      images: this.advert.images,
+      map: this.advert.map
     });
   }
 
   drop(event: CdkDragDrop<string[]>) {
-    moveItemInArray(this.movies, event.previousIndex, event.currentIndex);
+    moveItemInArray(this.advert.prevImages, event.previousIndex, event.currentIndex);
   }
 
   onSave() {
-    console.log(this.advertForm.value);
-    this.advertService.add(this.advertForm.value).subscribe(rs => {
-      console.log(rs);
+    console.log(this.translate.instant('address_conflict_confirm'));
+    this.advertService.add(this.advertForm.value).subscribe(res => {
+      console.log(this.translate.instant('address_conflict_confirm'));
+    }, err => {
+      const params = {
+        title: 'Thông báo',
+        message: this.translate.instant(err.error.message)
+      };
+      this.dialog.confirm(params).then(rs => {
+        if (rs) {
+          const data = this.advertForm.value;
+          data.ignoreError = true;
+          this.advertService.add(data).subscribe(res => {
+            params.message = 'Thêm thành công';
+            this.dialog.info(params);
+          });
+        }
+      });
     });
   }
 
@@ -161,23 +211,23 @@ export interface Advert {
   ownerEmail: string;
   ownerPrice: string;
   ownerContactPerson: string;
-  ownerStartDate: number;
-  ownerEndDate: number;
+  ownerStartDate: any;
+  ownerEndDate: any;
   ownerNote: string;
   advCompPhone: string;
   advCompEmail: string;
   advCompPrice: string;
   advCompContactPerson: string;
   advCompName: string;
-  advCompStartDate: number;
-  advCompEndDate: number;
+  advCompStartDate: any;
+  advCompEndDate: any;
   advCompNote: string;
   price: string;
   createdBy: string;
-  createdDate: number;
-  updatedDate: number;
+  createdDate: any;
+  updatedDate: any;
   trash: boolean;
-  publishedDate: number;
+  publishedDate: any;
   publishedId: number;
   type: string;
   images: File[];

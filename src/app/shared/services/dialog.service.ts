@@ -1,7 +1,7 @@
 import { MatDialog } from '@angular/material';
 import { DialogType } from '../models/dialog-type';
 import { DialogComponent } from '../components/dialog/dialog.component';
-import { Injectable } from '@angular/core';
+import { Injectable, Injector } from '@angular/core';
 
 @Injectable({
     providedIn: 'root'
@@ -9,7 +9,7 @@ import { Injectable } from '@angular/core';
 export class Dialog {
     constructor(
         private dialog: MatDialog
-    ) {}
+    ) { }
 
     confirm(params) {
         params.type = DialogType.CONFIRM;
@@ -18,6 +18,16 @@ export class Dialog {
 
     info(params) {
         params.type = DialogType.INFO;
+        return this.open(params);
+    }
+
+    error(params) {
+        params.type = DialogType.ERROR;
+        return this.open(params);
+    }
+
+    warning(params) {
+        params.type = DialogType.WARNING;
         return this.open(params);
     }
 

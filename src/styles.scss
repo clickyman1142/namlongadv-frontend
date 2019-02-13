@@ -11,3 +11,9 @@
 *:focus {
     outline: none !important;
 }
+
+mat-icon {
+    &.action {
+        cursor: pointer;
+    }
+}

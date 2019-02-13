@@ -5,7 +5,7 @@
       <mat-card-content fxLayout="column">
         <div class="basic-info" fxLayout="column">
           <mat-form-field>
-            <input matInput placeholder="Tên đăng nhập *" formControlName="username">
+            <input matInput placeholder="Tên đăng nhập *" formControlName="username" [readOnly]="user.id">
           </mat-form-field>
           <mat-form-field>
             <input matInput formControlName="password" autocomplete="new-password" 

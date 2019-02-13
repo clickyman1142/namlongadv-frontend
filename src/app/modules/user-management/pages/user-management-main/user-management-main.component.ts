@@ -3,10 +3,7 @@ import { MatTableDataSource, MatPaginator } from '@angular/material';
 import { UserService } from '../../shared/user.service';
 import { Spinner } from 'src/app/shared/services/spinner.service';
 import { Dialog } from 'src/app/shared/services/dialog.service';
-
-const ELEMENT_DATA: User[] = [
-  { username: 'nguyenminhtri', name: 'Nguyen Minh Tri', department: 'Kinh doanh', phone: '', email: '' },
-];
+import { SnackBar } from 'src/app/shared/services/snackbar.service';
 
 @Component({
   selector: 'app-user-management-main',
@@ -29,7 +26,8 @@ export class UserManagementMainComponent implements OnInit {
   constructor(
     private userService: UserService,
     private spinner: Spinner,
-    private dialog: Dialog
+    private dialog: Dialog,
+    private snackBar: SnackBar
   ) { }
 
   ngOnInit() {
@@ -54,7 +52,10 @@ export class UserManagementMainComponent implements OnInit {
     this.dialog.confirm(params).then(rs => {
       if (!rs) { return; }
       this.userService.delete(userId).subscribe(res => {
-        if (!res.data) { return; }
+        if (!res.data) {
+          this.snackBar.open('Không thể xóa tài khoản này');
+          return;
+        }
         const data = this.dataSource.data;
         data.splice((this.paginator.pageIndex * this.paginator.pageSize) + index, 1);
         this.dataSource.data = data;

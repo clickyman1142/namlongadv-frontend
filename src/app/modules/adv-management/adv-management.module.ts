@@ -7,6 +7,7 @@ import { AdvManagementDetailComponent } from './pages/adv-management-detail/adv-
 import { AdvManagementComponent } from './adv-management.component';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ProvinceService } from 'src/app/shared/services/province.service';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
   ],
   exports: [
     AdvManagementRoutingModule
+  ],
+  providers: [
+    ProvinceService
   ]
 })
 export class AdvManagementModule { }

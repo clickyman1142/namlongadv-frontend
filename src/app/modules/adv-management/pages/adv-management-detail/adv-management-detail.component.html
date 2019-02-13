@@ -26,7 +26,7 @@
             <input matInput placeholder="Tỉnh" formControlName="provinceCode">
           </mat-form-field>
           <mat-form-field>
-            <input matInput placeholder="Tọa độ">
+            <input matInput placeholder="Tọa độ" formControlName="map">
           </mat-form-field>
           <mat-form-field>
             <input matInput placeholder="Đơn giá" formControlName="price">
@@ -79,12 +79,12 @@
                 <input matInput placeholder="Người liên hệ" formControlName="ownerContactPerson">
               </mat-form-field>
               <mat-form-field>
-                <input matInput placeholder="Ngày bắt đầu" [matDatepicker]="pickerOwnerStart" readonly formControlName="ownerStartDate">
+                <input matInput placeholder="Ngày bắt đầu" [matDatepicker]="pickerOwnerStart" formControlName="ownerStartDate">
                 <mat-datepicker-toggle matSuffix [for]="pickerOwnerStart"></mat-datepicker-toggle>
                 <mat-datepicker #pickerOwnerStart></mat-datepicker>
               </mat-form-field>
               <mat-form-field>
-                <input matInput placeholder="Ngày kết thúc" [matDatepicker]="pickerOwnerEnd" readonly formControlName="ownerEndDate">
+                <input matInput placeholder="Ngày kết thúc" [matDatepicker]="pickerOwnerEnd" formControlName="ownerEndDate">
                 <mat-datepicker-toggle matSuffix [for]="pickerOwnerEnd"></mat-datepicker-toggle>
                 <mat-datepicker #pickerOwnerEnd></mat-datepicker>
               </mat-form-field>
@@ -138,13 +138,13 @@
         <mat-card-title>Hình ảnh</mat-card-title>
         <mat-card-content fxLayout="column">
           <div cdkDropList class="images" (cdkDropListDropped)="drop($event)">
-            <div class="image" *ngFor="let movie of movies" cdkDrag fxLayout="column">
+            <div class="image" *ngFor="let image of advert.prevImages" cdkDrag fxLayout="column">
               <div class="image-placeholder" *cdkDragPlaceholder></div>
               <div class="image-actions">
                 <mat-checkbox></mat-checkbox>
                 <mat-icon>delete_outline</mat-icon>
               </div>
-              <img src="https://picsum.photos/100/100/?random" />
+              <img [src]="'http://localhost:8080/resources/images?url=' + image.url" />
             </div>
           </div>
           <input type="file" [ngStyle]="{marginTop: '10px'}" />

@@ -20,7 +20,8 @@ export const AppConfig = {
         uaa: environment.uaa,
         user: environment.user,
         userRole: environment.userRole,
-        advert: environment.advert
+        advert: environment.advert,
+        province: environment.province
     },
     generalConfig: {
         dateFormat: 'DD/MM/YYYY',

@@ -9,6 +9,7 @@ import { UserManagementComponent } from './user-management.component';
 import { UserService } from './shared/user.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { UserRoleService } from './shared/user-role.service';
+import { ProvinceService } from 'src/app/shared/services/province.service';
 
 @NgModule({
   declarations: [

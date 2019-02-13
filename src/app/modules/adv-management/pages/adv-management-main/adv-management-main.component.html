@@ -1,6 +1,6 @@
 <div class="adv-management-main" fxLayout="column" fxFlex="1 1 auto">
   <div class="actions" fxLayout="row" fxLayoutAlign="flex-end">
-    <button mat-flat-button color="primary" routerLink="create">Create</button>
+    <button mat-raised-button color="primary" routerLink="create">Create</button>
   </div>
 
   <mat-accordion fxLayout="column" fxFlex="1 1 auto" class="filter-panel">
@@ -28,9 +28,35 @@
           </mat-form-field>
         </div>
         <div class="filter-group row">
-          <mat-form-field *ngFor="let field of Object.keys(searchCriterias)" class="col-lg-2">
-            <input matInput placeholder="{{searchCriterias[field].title}}" [(ngModel)]="searchCriterias[field].value">
-          </mat-form-field>
+
+          <div *ngFor="let field of Object.keys(searchCriterias)" class="col-lg-2">
+            <app-autocomplete *ngIf="searchCriterias[field].type === 'selection' && field === 'addressSearching'"
+              [keyField]="'addressSearching'"
+              [valueField]="'addressSearching'"
+              [fieldLabel]="searchCriterias[field].title"
+              [remote]="'http://localhost:8080/management/advs/search'"
+              [displayFields]="['houseNo', 'street', 'ward', 'district', 'province']"
+              (changes)="searchCriterias[field].value = $event"></app-autocomplete>
+            <mat-form-field *ngIf="searchCriterias[field].type === 'input' || searchCriterias[field].type === 'autocomplete'">
+              <input matInput *ngIf="searchCriterias[field].type === 'input'" placeholder="{{searchCriterias[field].title}}" [(ngModel)]="searchCriterias[field].value">
+
+              <input matInput *ngIf="searchCriterias[field].type === 'autocomplete'" placeholder="{{searchCriterias[field].title}}" [(ngModel)]="searchCriterias[field].value">
+            </mat-form-field>
+
+            <app-autocomplete *ngIf="searchCriterias[field].type === 'selection' && field === 'provinceSearching'"
+              [keyField]="'name'"
+              [valueField]="'name'"
+              [fieldLabel]="searchCriterias[field].title" 
+              [options]="searchCriterias[field].options"
+              (changes)="searchCriterias[field].value = $event"></app-autocomplete>
+
+            <app-autocomplete *ngIf="searchCriterias[field].type === 'selection' && field === 'createdBy'"
+              [keyField]="'username'"
+              [valueField]="'username'"
+              [fieldLabel]="searchCriterias[field].title" 
+              [options]="searchCriterias[field].options"
+              (changes)="searchCriterias[field].value = $event"></app-autocomplete>
+          </div>
         </div>
         <button mat-raised-button color="warn" (click)="buildDataTable(true)">Lọc</button>
       </mat-panel-description>
@@ -51,26 +77,22 @@
         </td>
       </ng-container>
 
-      <!-- Position Column -->
       <ng-container matColumnDef="position">
         <th mat-header-cell *matHeaderCellDef [width]="30"> No. </th>
         <td mat-cell *matCellDef="let element; let i = index"> {{(i + 1) + (paginator.pageIndex * paginator.pageSize)}}
         </td>
       </ng-container>
 
-      <!-- Name Column -->
       <ng-container matColumnDef="code">
         <th mat-header-cell *matHeaderCellDef [width]="100"> Mã </th>
         <td mat-cell *matCellDef="let element; let i = index"> {{element.code}} </td>
       </ng-container>
 
-      <!-- Weight Column -->
       <ng-container matColumnDef="title">
         <th mat-header-cell *matHeaderCellDef [width]="200"> Tiêu đề </th>
         <td mat-cell *matCellDef="let element"> {{element.title}} </td>
       </ng-container>
 
-      <!-- Symbol Column -->
       <ng-container matColumnDef="address">
         <th mat-header-cell *matHeaderCellDef [width]="300"> Địa chỉ </th>
         <td mat-cell *matCellDef="let element">{{element.houseNo}} - {{element.street}} - {{element.ward}} -
@@ -108,6 +130,14 @@
         <td mat-cell *matCellDef="let element"></td>
       </ng-container>
 
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef> # </th>
+        <td mat-cell *matCellDef="let element">
+          <mat-icon class="action" [routerLink]="['/adv-management', element.id]">edit</mat-icon>
+          <mat-icon class="action" (click)="removeAdv(i, element.id)">delete</mat-icon>
+        </td>
+      </ng-container>
+
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selection.toggle(row)"></tr>
     </table>
@@ -116,6 +146,6 @@
   </div>
 
   <div class="actions" fxLayout="row" fxLayoutAlign="flex-end">
-    <button mat-flat-button color="primary" routerLink="create">Create</button>
+    <button mat-raised-button color="primary" routerLink="create">Create</button>
   </div>
 </div>
