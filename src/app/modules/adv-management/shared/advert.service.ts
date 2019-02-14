@@ -22,7 +22,7 @@ export class AdvertService {
         return this.httpClient.get(`${AppConfig.endpoints.advert}/search`, options);
     }
 
-    add(advert: Advert) {
+    save(advert: Advert) {
         const formData = new FormData();
         Object.keys(advert).forEach(field => {
             let value = advert[field];
@@ -33,7 +33,12 @@ export class AdvertService {
                 formData.append(field, value);
             }
         });
-        formData.set('images[0]', new File(['abc'], 'abc.jpg'));
+        advert.images.forEach((image, index) => {
+            if (!(image instanceof File)) {
+                image = JSON.stringify(image);
+            }
+            formData.set(`images[${index}]`, image);
+        });
         return this.httpClient.post(AppConfig.endpoints.advert, formData);
     }
 

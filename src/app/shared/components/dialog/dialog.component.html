@@ -5,5 +5,5 @@
 <mat-dialog-actions fxLayoutAlign="center center">
   <button *ngIf="type === dialogType.CONFIRM" mat-raised-button color="warn" [mat-dialog-close]="true">Yes</button>
   <button *ngIf="type === dialogType.CONFIRM" mat-raised-button color="primary" [mat-dialog-close]="false">No</button>
-  <button *ngIf="type === dialogType.INFO" mat-raised-button color="primary" [mat-dialog-close]="true">Ok</button>
+  <button *ngIf="type === dialogType.INFO || type === dialogType.ERROR" mat-raised-button color="primary" [mat-dialog-close]="true">Ok</button>
 </mat-dialog-actions>

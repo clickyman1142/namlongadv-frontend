@@ -1,3 +1,14 @@
 {
-    "address_conflict_confirm": "Trùng địa chỉ, bạn có muốn thêm mới không?"
+    "advert": {
+        "add_success": "Thêm địa điểm thành công",
+        "add_fail": "Thêm địa điểm chưa thành công",
+        "update_success": "Cập nhật địa điểm thành công",
+        "update_fail": "Cập nhật địa điểm chưa thành công",
+        "address_conflict_confirm": "Trùng địa chỉ, bạn có muốn thêm mới không?"
+    },
+    "common": {
+        "error": {
+            "server_error": "Lỗi máy chủ, vui lòng liên hệ admin"
+        }
+    }
 }

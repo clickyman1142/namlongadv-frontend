@@ -138,16 +138,17 @@
         <mat-card-title>Hình ảnh</mat-card-title>
         <mat-card-content fxLayout="column">
           <div cdkDropList class="images" (cdkDropListDropped)="drop($event)">
-            <div class="image" *ngFor="let image of advert.prevImages" cdkDrag fxLayout="column">
+            <div class="image" *ngFor="let image of advert.images" cdkDrag fxLayout="column">
               <div class="image-placeholder" *cdkDragPlaceholder></div>
               <div class="image-actions">
                 <mat-checkbox></mat-checkbox>
                 <mat-icon>delete_outline</mat-icon>
               </div>
               <img [src]="'http://localhost:8080/resources/images?url=' + image.url" />
+              <input type="file" [ngStyle]="{marginTop: '10px'}" />
             </div>
           </div>
-          <input type="file" [ngStyle]="{marginTop: '10px'}" />
+          <input type="file" multiple [ngStyle]="{marginTop: '10px'}" />
         </mat-card-content>
       </mat-card>
       <mat-card class="map" [ngStyle]="{marginTop: '10px'}">

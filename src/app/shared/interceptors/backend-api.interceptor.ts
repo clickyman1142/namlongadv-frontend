@@ -13,11 +13,14 @@ import 'rxjs/add/operator/catch';
 import { throwError } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { Dialog } from '../services/dialog.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Injectable()
 export class BackendAPIInterceptor implements HttpInterceptor {
     constructor(
-        private authService: AuthService
+        private authService: AuthService,
+        private dialog: Dialog,
+        private translate: TranslateService
     ) {}
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
@@ -31,15 +34,15 @@ export class BackendAPIInterceptor implements HttpInterceptor {
             .handle(newReq)
             .do(event => {
                 if (event instanceof HttpResponse) {
-                    // Do
+                    // Do nothing
                 }
             })
             .catch(response => {
-                if (response.status === 500) {
-                    // this.dialog.info({
-                    //     title: 'Error',
-                    //     message: 'Server error, please contact help desk'
-                    // });
+                if (response.status === 500 || response.status === 405) {
+                    this.dialog.error({
+                        title: 'Thông báo',
+                        message: this.translate.instant('common.error.server_error')
+                    });
                 } else {
                     return throwError(response);
                 }

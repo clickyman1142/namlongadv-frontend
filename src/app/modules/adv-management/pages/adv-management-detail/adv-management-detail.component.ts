@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { AdvertService } from '../../shared/advert.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Spinner } from 'src/app/shared/services/spinner.service';
 import * as moment from 'moment';
 
@@ -42,7 +42,8 @@ export class AdvManagementDetailComponent implements OnInit {
     private activeRoute: ActivatedRoute,
     private spinner: Spinner,
     private dialog: Dialog,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private router: Router
   ) { }
 
   ngOnInit() {
@@ -104,7 +105,6 @@ export class AdvManagementDetailComponent implements OnInit {
       publishedId: data ? data.publishedId : 0,
       type: data ? data.type : '',
       images: data ? data.images : [],
-      prevImages: data ? data.prevImages : [],
       map: data ? data.map : undefined,
       ignoreError: data ? data.ignoreError : undefined
     };
@@ -148,31 +148,41 @@ export class AdvManagementDetailComponent implements OnInit {
       advCompNote: this.advert.advCompNote,
       price: this.advert.price,
       createdBy: this.advert.createdBy,
-      images: this.advert.images,
       map: this.advert.map
     });
   }
 
   drop(event: CdkDragDrop<string[]>) {
-    moveItemInArray(this.advert.prevImages, event.previousIndex, event.currentIndex);
+    moveItemInArray(this.advert.images, event.previousIndex, event.currentIndex);
   }
 
   onSave() {
-    console.log(this.translate.instant('address_conflict_confirm'));
-    this.advertService.add(this.advertForm.value).subscribe(res => {
-      console.log(this.translate.instant('address_conflict_confirm'));
+    let formData = this.advertForm.value;
+    formData = {
+      ...formData,
+      images: this.advert.images
+    };
+
+    const params = {
+      title: 'Thông báo',
+      message: ''
+    };
+    this.advertService.save(formData).subscribe(res => {
+      params.message = this.translate.instant(res.message);
+      this.dialog.info(params).then(rs => {
+        this.router.navigate(['/adv-management']);
+      });
     }, err => {
-      const params = {
-        title: 'Thông báo',
-        message: this.translate.instant(err.error.message)
-      };
+      params.message = this.translate.instant(err.error.message);
       this.dialog.confirm(params).then(rs => {
         if (rs) {
-          const data = this.advertForm.value;
+          const data = formData;
           data.ignoreError = true;
-          this.advertService.add(data).subscribe(res => {
-            params.message = 'Thêm thành công';
-            this.dialog.info(params);
+          this.advertService.save(data).subscribe(res => {
+            params.message = this.translate.instant(res.message);
+            this.dialog.info(params).then(r => {
+              this.router.navigate(['/adv-management']);
+            });
           });
         }
       });
@@ -230,8 +240,7 @@ export interface Advert {
   publishedDate: any;
   publishedId: number;
   type: string;
-  images: File[];
-  prevImages: string[];
+  images: any[];
   map: File;
   ignoreError: boolean;
 }

@@ -3,4 +3,4 @@ export const DialogType = {
     INFO: 'info',
     ERROR: 'error',
     WARNING: 'warning'
-}
+};

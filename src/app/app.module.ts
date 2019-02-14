@@ -9,12 +9,15 @@ import { BackendAPIInterceptor } from './shared/interceptors/backend-api.interce
 
 import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-import { Dialog } from './shared/services/dialog.service';
-import { MatDialog } from '@angular/material';
+import { MatDialogModule } from '@angular/material';
+import { DialogComponent } from './shared/components/dialog/dialog.component';
+import { MaterialModule } from './shared/modules/material.module';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    DialogComponent
   ],
   imports: [
     BrowserModule,
@@ -27,12 +30,18 @@ import { MatDialog } from '@angular/material';
         useFactory: createTranslateLoader,
         deps: [HttpClient]
       }
-    })
+    }),
+    MatDialogModule,
+    MaterialModule,
+    FlexLayoutModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: BackendAPIInterceptor, multi: true }
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [
+    DialogComponent
+  ]
 })
 export class AppModule {
   constructor(private translate: TranslateService) {
