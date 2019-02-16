@@ -45,4 +45,8 @@ export class AdvertService {
     findById(advId) {
         return this.httpClient.get(`${AppConfig.endpoints.advert}/${advId}`);
     }
+
+    deleteById(advId) {
+        return this.httpClient.delete(`${AppConfig.endpoints.advert}/${advId}`);
+    }
 }

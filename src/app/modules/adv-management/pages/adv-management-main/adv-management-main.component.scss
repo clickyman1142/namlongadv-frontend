@@ -17,6 +17,11 @@
                 }
             }
         }
+        .date-range {
+            input {
+                cursor: pointer;
+            }
+        }
     }
     mat-panel-description {
         margin: 0;

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AdvertService } from '../../shared/advert.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Spinner } from 'src/app/shared/services/spinner.service';
@@ -10,13 +10,15 @@ import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material';
 import { Dialog } from 'src/app/shared/services/dialog.service';
 import { TranslateService } from '@ngx-translate/core';
+import { AppConfig } from 'src/app/config/app.config';
+import { ProvinceService } from 'src/app/shared/services/province.service';
 
 export const MY_FORMATS = {
   parse: {
-    dateInput: 'DD/MM/YYYY',
+    dateInput: AppConfig.generalConfig.dateFormat,
   },
   display: {
-    dateInput: 'DD/MM/YYYY',
+    dateInput: AppConfig.generalConfig.dateFormat,
     monthYearLabel: 'MMM YYYY',
     dateA11yLabel: 'LL',
     monthYearA11yLabel: 'MMMM YYYY',
@@ -35,6 +37,22 @@ export const MY_FORMATS = {
 export class AdvManagementDetailComponent implements OnInit {
   advert: Advert;
   advertForm: FormGroup;
+  provinces: any[];
+  advertForms: any[] = [
+    'Trụ pano Quảng cáo',
+    'Trụ pano Quảng cáo ngoài trời',
+    'Trụ pano Quảng cáo ngoài trời 1 mặt',
+    'Trụ pano Quảng cáo ngoài trời 2 mặt',
+    'Trụ pano Quảng cáo ngoài trời 3 mặt',
+    'Trụ pano Quảng cáo ngoài trời 4 mặt',
+    'Billboard Quảng cáo',
+    'Billboard Quảng cáo ngoài trời',
+    'Billboard Quảng cáo ngoài trời 1 mặt',
+    'Billboard Quảng cáo ngoài trời 2 mặt',
+    'Billboard Quảng cáo ngoài trời 3 mặt',
+    'Billboard Quảng cáo ngoài trời 4 mặt',
+    'Billboard ốp tường'
+  ];
 
   constructor(
     private formBuilder: FormBuilder,
@@ -43,7 +61,8 @@ export class AdvManagementDetailComponent implements OnInit {
     private spinner: Spinner,
     private dialog: Dialog,
     private translate: TranslateService,
-    private router: Router
+    private router: Router,
+    private provinceService: ProvinceService
   ) { }
 
   ngOnInit() {
@@ -51,7 +70,7 @@ export class AdvManagementDetailComponent implements OnInit {
     this.buildForm();
 
     const params = this.activeRoute.snapshot.params;
-    if (params) {
+    if (params.id) {
       this.spinner.show();
       this.advertService.findById(params.id).subscribe(rs => {
         this.initFormData(rs.data);
@@ -62,6 +81,8 @@ export class AdvManagementDetailComponent implements OnInit {
   }
 
   initFormData(data) {
+    this.buildProvinceOptions();
+
     this.advert = {
       id: data ? data.id : '',
       code: data ? data.code : '',
@@ -110,12 +131,18 @@ export class AdvManagementDetailComponent implements OnInit {
     };
   }
 
+  buildProvinceOptions() {
+    this.provinceService.getAll().subscribe(rs => {
+      this.provinces = rs.data;
+    });
+  }
+
   buildForm() {
     this.advertForm = this.formBuilder.group({
       id: this.advert.id,
       code: this.advert.code,
       provinceCode: this.advert.provinceCode,
-      title: this.advert.title,
+      title: [this.advert.title, Validators.required],
       street: this.advert.street,
       houseNo: this.advert.houseNo,
       ward: this.advert.ward,
@@ -132,14 +159,14 @@ export class AdvManagementDetailComponent implements OnInit {
       lightSystem: this.advert.lightSystem,
       type: this.advert.type,
       ownerPhone: this.advert.ownerPhone,
-      ownerEmail: this.advert.ownerEmail,
+      ownerEmail: [this.advert.ownerEmail, Validators.email],
       ownerPrice: this.advert.ownerPrice,
       ownerContactPerson: this.advert.ownerContactPerson,
       ownerStartDate: this.advert.ownerStartDate,
       ownerEndDate: this.advert.ownerEndDate,
       ownerNote: this.advert.ownerNote,
       advCompPhone: this.advert.advCompPhone,
-      advCompEmail: this.advert.advCompEmail,
+      advCompEmail: [this.advert.advCompEmail, Validators.email],
       advCompPrice: this.advert.advCompPrice,
       advCompContactPerson: this.advert.advCompContactPerson,
       advCompName: this.advert.advCompName,
@@ -157,6 +184,7 @@ export class AdvManagementDetailComponent implements OnInit {
   }
 
   onSave() {
+    this.spinner.show();
     let formData = this.advertForm.value;
     formData = {
       ...formData,
@@ -168,11 +196,13 @@ export class AdvManagementDetailComponent implements OnInit {
       message: ''
     };
     this.advertService.save(formData).subscribe(res => {
+      this.spinner.hide();
       params.message = this.translate.instant(res.message);
       this.dialog.info(params).then(rs => {
         this.router.navigate(['/adv-management']);
       });
     }, err => {
+      this.spinner.hide();
       params.message = this.translate.instant(err.error.message);
       this.dialog.confirm(params).then(rs => {
         if (rs) {
@@ -187,6 +217,16 @@ export class AdvManagementDetailComponent implements OnInit {
         }
       });
     });
+  }
+
+  setFormValue(key: string, value: any) {
+    this.advertForm.controls[key].setValue(value);
+    if (key === 'provinceCode') {
+      const selectedProvince = this.provinces.find(province => province.code === value);
+      if (selectedProvince) {
+        this.advertForm.controls['province'].setValue(selectedProvince.name);
+      }
+    }
   }
 
   get advertFormControls() {

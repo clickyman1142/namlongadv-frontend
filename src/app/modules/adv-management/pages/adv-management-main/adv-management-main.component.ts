@@ -1,16 +1,36 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatTableDataSource, MatPaginator } from '@angular/material';
+import { MatTableDataSource, MatPaginator, DateAdapter, MAT_DATE_LOCALE, MAT_DATE_FORMATS } from '@angular/material';
 import { AdvertService } from '../../shared/advert.service';
 import { Spinner } from 'src/app/shared/services/spinner.service';
 import { SelectionModel } from '@angular/cdk/collections';
 import * as _moment from 'moment';
 import { ProvinceService } from 'src/app/shared/services/province.service';
 import { UserService } from 'src/app/modules/user-management/shared/user.service';
+import { MomentDateAdapter } from '@angular/material-moment-adapter';
+import { AppConfig } from 'src/app/config/app.config';
+import { Dialog } from 'src/app/shared/services/dialog.service';
+import { TranslateService } from '@ngx-translate/core';
+
+export const MY_FORMATS = {
+  parse: {
+    dateInput: AppConfig.generalConfig.dateFormat,
+  },
+  display: {
+    dateInput: AppConfig.generalConfig.dateFormat,
+    monthYearLabel: 'MMM YYYY',
+    dateA11yLabel: 'LL',
+    monthYearA11yLabel: 'MMMM YYYY',
+  },
+};
 
 @Component({
   selector: 'app-adv-management-main',
   templateUrl: './adv-management-main.component.html',
-  styleUrls: ['./adv-management-main.component.scss']
+  styleUrls: ['./adv-management-main.component.scss'],
+  providers: [
+    { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },
+    { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS }
+  ]
 })
 export class AdvManagementMainComponent implements OnInit {
   _moment = _moment;
@@ -110,7 +130,9 @@ export class AdvManagementMainComponent implements OnInit {
     private advertService: AdvertService,
     private spinner: Spinner,
     private provinceService: ProvinceService,
-    private userService: UserService
+    private userService: UserService,
+    private dialog: Dialog,
+    private translate: TranslateService
   ) { }
 
   ngOnInit() {
@@ -177,5 +199,32 @@ export class AdvManagementMainComponent implements OnInit {
     this.isAllSelected() ?
       this.selection.clear() :
       this.dataSource.data.forEach(row => this.selection.select(row));
+  }
+
+  removeAdv(advertId: string, e) {
+    e.stopPropagation();
+    this.dialog.confirm({
+      title: this.translate.instant('common.info'),
+      message: this.translate.instant('advert.confirm_delete_action')
+    }).then(rs => {
+      if (rs) {
+        this.spinner.show();
+        this.advertService.deleteById(advertId).subscribe(res => {
+          if (res) {
+            this.buildDataTable(false);
+            this.spinner.hide();
+            this.dialog.info({
+              title: this.translate.instant('common.info'),
+              message: this.translate.instant('advert.delete_success')
+            });
+          }
+        }, err => {
+          this.dialog.info({
+            title: this.translate.instant('common.info'),
+            message: this.translate.instant('advert.delete_fail')
+          });
+        });
+      }
+    });
   }
 }

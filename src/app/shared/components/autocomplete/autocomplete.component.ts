@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, OnChanges } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Observable, of } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
@@ -9,13 +9,16 @@ import { AutocompleteService } from './service/autocomplete.service';
   templateUrl: './autocomplete.component.html',
   styleUrls: ['./autocomplete.component.scss']
 })
-export class AutocompleteComponent implements OnInit {
+export class AutocompleteComponent implements OnInit, OnChanges {
   @Input() options: any[];
   @Input() fieldLabel: string;
   @Input() keyField: string;
   @Input() valueField: string;
   @Input() remote: string;
-  @Input() displayFields: string[];
+  @Input() displayFields: string[]; // For combine display fields (only remote filter supportted)
+  @Input() exactRequired: Boolean = false;
+  @Input() selected: string;
+
   @Output() changes = new EventEmitter();
 
   autocompleteControl: FormControl = new FormControl();
@@ -41,8 +44,25 @@ export class AutocompleteComponent implements OnInit {
       );
     }
     this.autocompleteControl.valueChanges.subscribe(val => {
-      this.changes.emit(val);
+      const selectedItem = this.options.find(item => item[this.keyField] === val);
+      if (selectedItem) {
+        this.changes.emit(selectedItem[this.valueField]);
+      } else if (!this.exactRequired) {
+        this.changes.emit(val.trim());
+      } else {
+        this.changes.emit('');
+      }
     });
+  }
+
+  findDisplayValue(value: string) {
+    return this.options.find(item => item[this.valueField] === value) || {[this.keyField]: ''};
+  }
+
+  ngOnChanges(changes) {
+    if (this.options && changes.selected) {
+      this.autocompleteControl.setValue(this.findDisplayValue(this.selected[this.valueField] || this.selected)[this.keyField]);
+    }
   }
 
   private _filterFromRemote(value: string) {

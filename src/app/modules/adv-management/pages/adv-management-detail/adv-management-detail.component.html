@@ -8,7 +8,7 @@
             <input matInput placeholder="Mã" formControlName="code" readonly>
           </mat-form-field>
           <mat-form-field>
-            <input matInput placeholder="Tiêu đề" formControlName="title">
+            <input matInput placeholder="Tiêu đề *" formControlName="title">
           </mat-form-field>
           <mat-form-field>
             <input matInput placeholder="Số nhà" formControlName="houseNo">
@@ -22,9 +22,14 @@
           <mat-form-field>
             <input matInput placeholder="Quận" formControlName="district">
           </mat-form-field>
-          <mat-form-field>
-            <input matInput placeholder="Tỉnh" formControlName="provinceCode">
-          </mat-form-field>
+          <app-autocomplete
+              [keyField]="'name'"
+              [valueField]="'code'"
+              [fieldLabel]="'Tỉnh'" 
+              [options]="provinces"
+              [exactRequired]="true"
+              [selected]="form.controls.provinceCode.value"
+              (changes)="setFormValue('provinceCode', $event)"></app-autocomplete>
           <mat-form-field>
             <input matInput placeholder="Tọa độ" formControlName="map">
           </mat-form-field>
@@ -47,7 +52,7 @@
             <input matInput placeholder="Lưu lượng" formControlName="flow">
           </mat-form-field>
           <mat-form-field>
-            <input matInput placeholder="Thời gian thực hiện" formControlName="implTime">
+            <input matInput placeholder="Thời gian thực hiện" type="number" formControlName="implTime">
           </mat-form-field>
           <mat-form-field>
             <input matInput placeholder="Hình thức thực hiện" formControlName="implForm">
@@ -56,7 +61,14 @@
             <input matInput placeholder="Hệ thống chiếu sáng" formControlName="lightSystem">
           </mat-form-field>
           <mat-form-field>
-            <input matInput placeholder="Loại hình" formControlName="type">
+            <mat-select placeholder="Loại hình" formControlName="type">
+              <mat-option *ngFor="let type of advertForms" [value]="type">
+                {{type}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field *ngIf="advert.createdBy">
+            <input matInput readonly placeholder="Người tạo" formControlName="createdBy">
           </mat-form-field>
           <mat-form-field>
             <textarea matInput placeholder="Mô tả" formControlName="describe"></textarea>
@@ -79,12 +91,16 @@
                 <input matInput placeholder="Người liên hệ" formControlName="ownerContactPerson">
               </mat-form-field>
               <mat-form-field>
-                <input matInput placeholder="Ngày bắt đầu" [matDatepicker]="pickerOwnerStart" formControlName="ownerStartDate">
+                <input matInput placeholder="Ngày bắt đầu" (click)="pickerOwnerStart.open()"
+                [max]="form.controls.ownerEndDate.value"
+                [matDatepicker]="pickerOwnerStart" formControlName="ownerStartDate">
                 <mat-datepicker-toggle matSuffix [for]="pickerOwnerStart"></mat-datepicker-toggle>
                 <mat-datepicker #pickerOwnerStart></mat-datepicker>
               </mat-form-field>
               <mat-form-field>
-                <input matInput placeholder="Ngày kết thúc" [matDatepicker]="pickerOwnerEnd" formControlName="ownerEndDate">
+                <input matInput placeholder="Ngày kết thúc" (click)="pickerOwnerEnd.open()"
+                [min]="form.controls.ownerStartDate.value"
+                [matDatepicker]="pickerOwnerEnd" formControlName="ownerEndDate">
                 <mat-datepicker-toggle matSuffix [for]="pickerOwnerEnd"></mat-datepicker-toggle>
                 <mat-datepicker #pickerOwnerEnd></mat-datepicker>
               </mat-form-field>
@@ -112,12 +128,16 @@
                 <input matInput placeholder="Người liên hệ" formControlName="advCompContactPerson">
               </mat-form-field>
               <mat-form-field>
-                <input matInput placeholder="Ngày bắt đầu" [matDatepicker]="pickerCompStart" formControlName="advCompStartDate">
+                <input matInput placeholder="Ngày bắt đầu" (click)="pickerCompStart.open()"
+                [max]="form.controls.advCompEndDate.value"
+                [matDatepicker]="pickerCompStart" formControlName="advCompStartDate">
                 <mat-datepicker-toggle matSuffix [for]="pickerCompStart"></mat-datepicker-toggle>
                 <mat-datepicker #pickerCompStart></mat-datepicker>
               </mat-form-field>
               <mat-form-field>
-                <input matInput placeholder="Ngày kết thúc" [matDatepicker]="pickerCompEnd" formControlName="advCompEndDate">
+                <input matInput placeholder="Ngày kết thúc" (click)="pickerCompEnd.open()"
+                [min]="form.controls.advCompStartDate.value"
+                [matDatepicker]="pickerCompEnd" formControlName="advCompEndDate">
                 <mat-datepicker-toggle matSuffix [for]="pickerCompEnd"></mat-datepicker-toggle>
                 <mat-datepicker #pickerCompEnd></mat-datepicker>
               </mat-form-field>

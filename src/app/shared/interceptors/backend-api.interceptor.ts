@@ -43,6 +43,11 @@ export class BackendAPIInterceptor implements HttpInterceptor {
                         title: 'Thông báo',
                         message: this.translate.instant('common.error.server_error')
                     });
+                } else if (response.status === 400 && !response.error) {
+                    this.dialog.error({
+                        title: 'Thông báo',
+                        message: this.translate.instant('common.error.bad_request')
+                    });
                 } else {
                     return throwError(response);
                 }

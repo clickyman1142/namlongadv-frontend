@@ -3,7 +3,7 @@
 <mat-dialog-content>{{message}}</mat-dialog-content>
 
 <mat-dialog-actions fxLayoutAlign="center center">
-  <button *ngIf="type === dialogType.CONFIRM" mat-raised-button color="warn" [mat-dialog-close]="true">Yes</button>
-  <button *ngIf="type === dialogType.CONFIRM" mat-raised-button color="primary" [mat-dialog-close]="false">No</button>
-  <button *ngIf="type === dialogType.INFO || type === dialogType.ERROR" mat-raised-button color="primary" [mat-dialog-close]="true">Ok</button>
+  <button *ngIf="type === dialogType.CONFIRM" mat-raised-button color="warn" [mat-dialog-close]="true">{{'common.yes' | translate}}</button>
+  <button *ngIf="type === dialogType.CONFIRM" mat-raised-button color="primary" [mat-dialog-close]="false">{{'common.no' | translate}}</button>
+  <button *ngIf="type === dialogType.INFO || type === dialogType.ERROR" mat-raised-button color="primary" [mat-dialog-close]="true">{{'common.ok' | translate}}</button>
 </mat-dialog-actions>

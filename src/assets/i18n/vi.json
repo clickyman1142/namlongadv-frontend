@@ -4,11 +4,20 @@
         "add_fail": "Thêm địa điểm chưa thành công",
         "update_success": "Cập nhật địa điểm thành công",
         "update_fail": "Cập nhật địa điểm chưa thành công",
-        "address_conflict_confirm": "Trùng địa chỉ, bạn có muốn thêm mới không?"
+        "address_conflict_confirm": "Trùng địa chỉ, bạn có muốn thêm mới không?",
+        "confirm_delete_action": "Bạn có chắc muốn xóa địa điểm này không?",
+        "delete_success": "Đã xóa địa điểm thành công",
+        "delete_fail": "Xóa địa chỉ chưa thành công"
     },
     "common": {
+        "info": "Thông báo",
+        "yes": "Có",
+        "no": "Không",
+        "cancel": "Hủy",
+        "ok": "Ok",
         "error": {
-            "server_error": "Lỗi máy chủ, vui lòng liên hệ admin"
+            "server_error": "Lỗi máy chủ, vui lòng liên hệ admin",
+            "bad_request": "Lỗi nhập liệu, vui lòng kiểm tra lại hoặc liên hệ với admin"
         }
     }
 }

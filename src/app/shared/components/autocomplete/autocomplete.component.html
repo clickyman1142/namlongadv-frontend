@@ -2,7 +2,7 @@
   <input type="text" [placeholder]="fieldLabel" [formControl]="autocompleteControl" aria-label="Number" matInput
     [matAutocomplete]="auto">
   <mat-autocomplete #auto="matAutocomplete">
-    <mat-option *ngFor="let option of filteredOptions | async" [value]="option[valueField] || option">
+    <mat-option *ngFor="let option of filteredOptions | async" [value]="option[keyField] || option">
       {{option[keyField] || option}}
     </mat-option>
   </mat-autocomplete>

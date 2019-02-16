@@ -13,15 +13,15 @@
       <mat-panel-description fxLayout="column" fxFlex="wrap">
         <div class="filter-group date-range" fxLayoutAlign="end">
           <mat-form-field>
-            <input matInput disabled [value]="dateRange.start | date:'d/M/y'" placeholder="Bắt đầu từ ngày">
-            <input matInput [hidden]="true" [max]="dateRange.end" [(ngModel)]="dateRange.start"
-              [matDatepicker]="pickerStart">
+            <input matInput readonly placeholder="Bắt đầu từ ngày"
+              [max]="dateRange.end" [(ngModel)]="dateRange.start"
+              [matDatepicker]="pickerStart" (click)="pickerStart.open()">
             <mat-datepicker-toggle matSuffix [for]="pickerStart"></mat-datepicker-toggle>
             <mat-datepicker #pickerStart disabled="false"></mat-datepicker>
           </mat-form-field>
           <mat-form-field>
-            <input matInput disabled [value]="dateRange.end | date:'d/M/y'" placeholder="Tới ngày">
-            <input matInput [hidden]="true" [min]="dateRange.start" [max]="today" [(ngModel)]="dateRange.end"
+            <input matInput readonly (click)="pickerEnd.open()" placeholder="Tới ngày"
+              [min]="dateRange.start" [max]="today" [(ngModel)]="dateRange.end"
               [matDatepicker]="pickerEnd">
             <mat-datepicker-toggle matSuffix [for]="pickerEnd"></mat-datepicker-toggle>
             <mat-datepicker #pickerEnd disabled="false"></mat-datepicker>
@@ -134,7 +134,7 @@
         <th mat-header-cell *matHeaderCellDef> # </th>
         <td mat-cell *matCellDef="let element">
           <mat-icon class="action" [routerLink]="['/adv-management', element.id]">edit</mat-icon>
-          <mat-icon class="action" (click)="removeAdv(i, element.id)">delete</mat-icon>
+          <mat-icon class="action" (click)="removeAdv(element.id, $event)">delete</mat-icon>
         </td>
       </ng-container>
 
