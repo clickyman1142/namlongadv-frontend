@@ -12,6 +12,7 @@ import { Dialog } from 'src/app/shared/services/dialog.service';
 import { TranslateService } from '@ngx-translate/core';
 import { AppConfig } from 'src/app/config/app.config';
 import { ProvinceService } from 'src/app/shared/services/province.service';
+import { AddressConflictDialogComponent } from '../../components/address-conflict-dialog/address-conflict-dialog.component';
 
 export const MY_FORMATS = {
   parse: {
@@ -192,30 +193,37 @@ export class AdvManagementDetailComponent implements OnInit {
     };
 
     const params = {
-      title: 'Thông báo',
-      message: ''
+      width: '400px',
+      data: {
+        title: 'Thông báo',
+        message: '',
+        conflictedList: []
+      }
     };
     this.advertService.save(formData).subscribe(res => {
       this.spinner.hide();
-      params.message = this.translate.instant(res.message);
-      this.dialog.info(params).then(rs => {
-        this.router.navigate(['/adv-management']);
-      });
-    }, err => {
-      this.spinner.hide();
-      params.message = this.translate.instant(err.error.message);
-      this.dialog.confirm(params).then(rs => {
-        if (rs) {
-          const data = formData;
-          data.ignoreError = true;
-          this.advertService.save(data).subscribe(res => {
-            params.message = this.translate.instant(res.message);
-            this.dialog.info(params).then(r => {
-              this.router.navigate(['/adv-management']);
+      params.data.message = this.translate.instant(res.message);
+      if (res.message !== 'advert.address_conflict_confirm') {
+        this.dialog.info(params.data).then(rs => {
+          this.router.navigate(['/adv-management']);
+        });
+      } else {
+        params.data.conflictedList = res.data;
+        this.dialog.openCustomDialog(AddressConflictDialogComponent, params).then(confirm => {
+          if (confirm) {
+            const data = formData;
+            data.ignoreError = true;
+            this.advertService.save(data).subscribe(rs => {
+              params.data.message = this.translate.instant(rs.message);
+              this.dialog.info(params.data).then(r => {
+                this.router.navigate(['/adv-management']);
+              });
             });
-          });
-        }
-      });
+          }
+        });
+      }
+    }, err => {
+      console.log('Error', err);
     });
   }
 

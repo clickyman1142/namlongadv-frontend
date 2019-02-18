@@ -8,6 +8,7 @@ import { AdvManagementComponent } from './adv-management.component';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ProvinceService } from 'src/app/shared/services/province.service';
+import { AddressConflictDialogComponent } from './components/address-conflict-dialog/address-conflict-dialog.component';
 
 @NgModule({
   declarations: [

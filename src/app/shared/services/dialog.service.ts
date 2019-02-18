@@ -40,4 +40,8 @@ export class Dialog {
         });
         return dialogRef.afterClosed().toPromise();
     }
+
+    openCustomDialog(customDialog, params) {
+        return this.dialog.open(customDialog, params).afterClosed().toPromise();
+    }
 }

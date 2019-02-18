@@ -1,0 +1,15 @@
+<h2 mat-dialog-title>{{data.title}}</h2>
+
+<mat-dialog-content>
+  <ul>
+    <li *ngFor="let item of data.conflictedList">
+      <a href="#" (click)="redirect(item.id, $event)">{{item.title}}</a>
+    </li>
+  </ul>
+  {{data.message}}
+</mat-dialog-content>
+
+<mat-dialog-actions fxLayoutAlign="center center">
+  <button mat-raised-button color="warn" [mat-dialog-close]="true">{{'common.yes' | translate}}</button>
+  <button mat-raised-button color="primary" [mat-dialog-close]="false">{{'common.no' | translate}}</button>
+</mat-dialog-actions>

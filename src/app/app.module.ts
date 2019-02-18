@@ -13,11 +13,13 @@ import { MatDialogModule } from '@angular/material';
 import { DialogComponent } from './shared/components/dialog/dialog.component';
 import { MaterialModule } from './shared/modules/material.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { AddressConflictDialogComponent } from './modules/adv-management/components/address-conflict-dialog/address-conflict-dialog.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    DialogComponent
+    DialogComponent,
+    AddressConflictDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -40,7 +42,8 @@ import { FlexLayoutModule } from '@angular/flex-layout';
   ],
   bootstrap: [AppComponent],
   entryComponents: [
-    DialogComponent
+    DialogComponent,
+    AddressConflictDialogComponent
   ]
 })
 export class AppModule {
