@@ -84,6 +84,8 @@ export class AdvManagementDetailComponent implements OnInit {
   initFormData(data) {
     this.buildProvinceOptions();
 
+    const map = data ? data.images.filter(image => image.map) : [];
+
     this.advert = {
       id: data ? data.id : '',
       code: data ? data.code : '',
@@ -126,8 +128,8 @@ export class AdvManagementDetailComponent implements OnInit {
       publishedDate: data ? (data.publishedDate ? moment(data.publishedDate) : undefined) : moment(),
       publishedId: data ? data.publishedId : 0,
       type: data ? data.type : '',
-      images: data ? data.images : [],
-      map: data ? data.map : undefined,
+      images: data ? data.images.filter(image => !image.map) : [],
+      map: data ? (map.length > 0 ? map[0] : undefined) : undefined,
       ignoreError: data ? data.ignoreError : undefined
     };
   }
@@ -175,8 +177,7 @@ export class AdvManagementDetailComponent implements OnInit {
       advCompEndDate: this.advert.advCompEndDate,
       advCompNote: this.advert.advCompNote,
       price: this.advert.price,
-      createdBy: this.advert.createdBy,
-      map: this.advert.map
+      createdBy: this.advert.createdBy
     });
   }
 
@@ -189,7 +190,8 @@ export class AdvManagementDetailComponent implements OnInit {
     let formData = this.advertForm.value;
     formData = {
       ...formData,
-      images: this.advert.images
+      images: this.advert.images,
+      map: this.advert.map
     };
 
     const params = {
@@ -244,6 +246,39 @@ export class AdvManagementDetailComponent implements OnInit {
   get form() {
       return this.advertForm;
   }
+
+  async changeImages(event, index) {
+    if (index !== -1) {
+      this.advert.images[index].file = event.target.files[0];
+      const url = await this.getFileURL(event.target.files[0]);
+      this.advert.images[index].url = url;
+    } else {
+      this.advert.images = [];
+      for (let i = 0; i < event.target.files.length; i++) {
+        const url = await this.getFileURL(event.target.files[i]);
+        this.advert.images.push({file: event.target.files[i], url});
+      }
+    }
+  }
+
+  async changeMap(event) {
+    const url = await this.getFileURL(event.target.files[0]);
+    this.advert.map = {file: event.target.files[0], url};
+  }
+
+  getFileURL(image: File): Promise<any> {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(image);
+      reader.onload = _event => {
+        return resolve(reader.result);
+      };
+    });
+  }
+
+  removeImage(index) {
+    this.advert.images.slice(index, 1);
+  }
 }
 
 export interface Advert {
@@ -289,6 +324,6 @@ export interface Advert {
   publishedId: number;
   type: string;
   images: any[];
-  map: File;
+  map: any;
   ignoreError: boolean;
 }

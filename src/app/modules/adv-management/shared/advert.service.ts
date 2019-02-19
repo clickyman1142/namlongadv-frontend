@@ -33,12 +33,18 @@ export class AdvertService {
                 formData.append(field, value);
             }
         });
+        // Process images list
         advert.images.forEach((image, index) => {
-            if (!(image instanceof File)) {
+            if (image.file) { // New file
+                image = image.file;
+            } else {
                 image = JSON.stringify(image);
             }
             formData.set(`images[${index}]`, image);
         });
+        formData.delete('images');
+        // Process map
+        formData.set('map', advert.map.file ? advert.map.file : advert.map.url);
         return this.httpClient.post(AppConfig.endpoints.advert, formData);
     }
 

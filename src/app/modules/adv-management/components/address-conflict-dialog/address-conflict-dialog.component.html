@@ -1,11 +1,11 @@
 <h2 mat-dialog-title>{{data.title}}</h2>
 
 <mat-dialog-content>
-  <ul>
+  <ol>
     <li *ngFor="let item of data.conflictedList">
       <a href="#" (click)="redirect(item.id, $event)">{{item.title}}</a>
     </li>
-  </ul>
+  </ol>
   {{data.message}}
 </mat-dialog-content>
 

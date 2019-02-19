@@ -158,23 +158,36 @@
         <mat-card-title>Hình ảnh</mat-card-title>
         <mat-card-content fxLayout="column">
           <div cdkDropList class="images" (cdkDropListDropped)="drop($event)">
-            <div class="image" *ngFor="let image of advert.images" cdkDrag fxLayout="column">
+            <div class="image" *ngFor="let image of advert.images; let i = index;" cdkDrag fxLayout="column">
               <div class="image-placeholder" *cdkDragPlaceholder></div>
               <div class="image-actions">
                 <mat-checkbox></mat-checkbox>
-                <mat-icon>delete_outline</mat-icon>
+                <mat-icon (click)="removeImage(i)">delete_outline</mat-icon>
               </div>
-              <img [src]="'http://localhost:8080/resources/images?url=' + image.url" />
-              <input type="file" [ngStyle]="{marginTop: '10px'}" />
+              <img *ngIf="!image.file" [src]="'http://localhost:8080/management/resources/images?url=' + image.url" />
+              <img *ngIf="image.file" [src]="image.url" />
+              <input type="file" [ngStyle]="{marginTop: '10px'}" (change)="changeImages($event, i)" />
             </div>
           </div>
-          <input type="file" multiple [ngStyle]="{marginTop: '10px'}" />
+          <input type="file" multiple [ngStyle]="{marginTop: '10px'}" (change)="changeImages($event, -1)" />
         </mat-card-content>
       </mat-card>
       <mat-card class="map" [ngStyle]="{marginTop: '10px'}">
         <mat-card-title>Map</mat-card-title>
-        <mat-card-content fxLayout="column">
-          <input type="file" />
+        <mat-card-content class="images" fxLayout="column">
+          <div class="image" fxLayout="column">
+            <div class="image-placeholder" *cdkDragPlaceholder></div>
+            <div class="image-actions">
+              <mat-checkbox></mat-checkbox>
+              <mat-icon>delete_outline</mat-icon>
+            </div>
+            <img *ngIf="!advert.map.file" [src]="'http://localhost:8080/management/resources/images?url=' + advert.map.url" />
+            <img *ngIf="advert.map.file" [src]="advert.map.url" />
+            <input type="file" [ngStyle]="{marginTop: '10px'}" (change)="changeMap($event)" />
+          </div>
+              <!-- </div>
+          <img *ngIf="advert.map.url" [src]="'http://localhost:8080/management/resources/images?url=' + advert.map.url" />
+          <input type="file" (change)="changeMap($event)"/> -->
         </mat-card-content>
       </mat-card>
     </div>

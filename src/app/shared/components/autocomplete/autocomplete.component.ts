@@ -44,6 +44,9 @@ export class AutocompleteComponent implements OnInit, OnChanges {
       );
     }
     this.autocompleteControl.valueChanges.subscribe(val => {
+      if (!this.options) {
+        return;
+      }
       const selectedItem = this.options.find(item => item[this.keyField] === val);
       if (selectedItem) {
         this.changes.emit(selectedItem[this.valueField]);
