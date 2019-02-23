@@ -44,5 +44,3 @@ Thumbs.db
 .editorconfig
 README.md
 package-lock.json
-tsconfig.json
-tslint.json
