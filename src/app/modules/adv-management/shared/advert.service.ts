@@ -44,7 +44,11 @@ export class AdvertService {
         });
         formData.delete('images');
         // Process map
-        formData.set('map', advert.map.file ? advert.map.file : advert.map.url);
+        if (advert.map) {
+            formData.set('map', advert.map.file ? advert.map.file : JSON.stringify({url: advert.map.url}));
+        } else {
+            formData.delete('map');
+        }
         return this.httpClient.post(AppConfig.endpoints.advert, formData);
     }
 
@@ -54,5 +58,9 @@ export class AdvertService {
 
     deleteById(advId) {
         return this.httpClient.delete(`${AppConfig.endpoints.advert}/${advId}`);
+    }
+
+    getChangeHistory(advId) {
+        return this.httpClient.get(`${AppConfig.endpoints.advertHistory}/${advId}`);
     }
 }

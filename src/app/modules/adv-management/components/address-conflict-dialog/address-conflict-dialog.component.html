@@ -6,7 +6,7 @@
       <a href="#" (click)="redirect(item.id, $event)">{{item.title}}</a>
     </li>
   </ol>
-  {{data.message}}
+  {{data.message | translate}}
 </mat-dialog-content>
 
 <mat-dialog-actions fxLayoutAlign="center center">

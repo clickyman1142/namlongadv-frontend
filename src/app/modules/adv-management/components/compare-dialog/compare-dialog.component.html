@@ -1,0 +1,9 @@
+<h2 mat-dialog-title>{{'advert.dialog.history' | translate}}</h2>
+
+<mat-dialog-content>
+  <app-compare-table [diffAdvs]="diffAdvs"></app-compare-table>
+</mat-dialog-content>
+
+<mat-dialog-actions fxLayoutAlign="center center">
+  <button mat-raised-button [mat-dialog-close]="false">{{'common.ok' | translate}}</button>
+</mat-dialog-actions>

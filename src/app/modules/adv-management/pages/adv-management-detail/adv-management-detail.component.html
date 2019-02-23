@@ -1,7 +1,10 @@
 <form (submit)="onSave()" [formGroup]="advertForm" #f="ngForm" autocomplete="off">
   <div class="adv-detail" fxLayout="row">
     <mat-card fxFlex="1 1 80%">
-      <mat-card-title>{{advert.id ? 'Cập nhật địa điểm' : 'Tạo mới địa điểm'}}</mat-card-title>
+      <mat-card-title>
+        {{advert.id ? 'Cập nhật địa điểm' : 'Tạo mới địa điểm'}}
+        <button type="button" mat-raised-button class="pull-right" (click)="openHistory()">...</button>
+      </mat-card-title>
       <mat-card-content fxLayout="column">
         <div class="basic-info" fxLayout="column">
           <mat-form-field *ngIf="advert.code">
@@ -31,7 +34,7 @@
               [selected]="form.controls.provinceCode.value"
               (changes)="setFormValue('provinceCode', $event)"></app-autocomplete>
           <mat-form-field>
-            <input matInput placeholder="Tọa độ" formControlName="map">
+            <input matInput placeholder="Tọa độ" formControlName="coordinates">
           </mat-form-field>
           <mat-form-field>
             <input matInput placeholder="Đơn giá" formControlName="price">
@@ -149,8 +152,8 @@
         </div>
       </mat-card-content>
       <mat-card-actions fxLayoutAlign="flex-end">
-        <button type="button" mat-flat-button color="warn" routerLink="/">Cancel</button>
-        <button type="submit" [disabled]="f.form.invalid" mat-flat-button color="primary">Save</button>
+        <button type="button" mat-raised-button color="warn" routerLink="/">Cancel</button>
+        <button type="submit" [disabled]="f.form.invalid" mat-raised-button color="primary">Save</button>
       </mat-card-actions>
     </mat-card>
     <div class="media" fxLayout="column" fxFlex="1 1 20%">
@@ -181,13 +184,10 @@
               <mat-checkbox></mat-checkbox>
               <mat-icon>delete_outline</mat-icon>
             </div>
-            <img *ngIf="!advert.map.file" [src]="'http://localhost:8080/management/resources/images?url=' + advert.map.url" />
-            <img *ngIf="advert.map.file" [src]="advert.map.url" />
+            <img *ngIf="advert.map && !advert.map.file" [src]="'http://localhost:8080/management/resources/images?url=' + advert.map.url" />
+            <img *ngIf="advert.map && advert.map.file" [src]="advert.map.url" />
             <input type="file" [ngStyle]="{marginTop: '10px'}" (change)="changeMap($event)" />
           </div>
-              <!-- </div>
-          <img *ngIf="advert.map.url" [src]="'http://localhost:8080/management/resources/images?url=' + advert.map.url" />
-          <input type="file" (change)="changeMap($event)"/> -->
         </mat-card-content>
       </mat-card>
     </div>

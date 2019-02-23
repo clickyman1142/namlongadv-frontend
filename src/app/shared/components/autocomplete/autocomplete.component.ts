@@ -63,7 +63,7 @@ export class AutocompleteComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes) {
-    if (this.options && changes.selected) {
+    if (this.options && changes.selected && changes.selected.currentValue) {
       this.autocompleteControl.setValue(this.findDisplayValue(this.selected[this.valueField] || this.selected)[this.keyField]);
     }
   }
@@ -72,7 +72,7 @@ export class AutocompleteComponent implements OnInit, OnChanges {
     const filter = [{
       key: this.keyField,
       operation: 'LIKE',
-      value: value
+      value
     }];
     return this.autocompleteService.filter(this.remote, JSON.stringify(filter));
   }

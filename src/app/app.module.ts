@@ -14,11 +14,15 @@ import { DialogComponent } from './shared/components/dialog/dialog.component';
 import { MaterialModule } from './shared/modules/material.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { AddressConflictDialogComponent } from './modules/adv-management/components/address-conflict-dialog/address-conflict-dialog.component';
+import { CompareDialogComponent } from './modules/adv-management/components/compare-dialog/compare-dialog.component';
+import { CompareTableComponent } from './modules/adv-management/components/compare-table/compare-table.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     DialogComponent,
+    CompareDialogComponent,
+    CompareTableComponent,
     AddressConflictDialogComponent
   ],
   imports: [
@@ -43,6 +47,7 @@ import { AddressConflictDialogComponent } from './modules/adv-management/compone
   bootstrap: [AppComponent],
   entryComponents: [
     DialogComponent,
+    CompareDialogComponent,
     AddressConflictDialogComponent
   ]
 })

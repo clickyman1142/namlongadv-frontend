@@ -13,6 +13,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { AppConfig } from 'src/app/config/app.config';
 import { ProvinceService } from 'src/app/shared/services/province.service';
 import { AddressConflictDialogComponent } from '../../components/address-conflict-dialog/address-conflict-dialog.component';
+import { CompareDialogComponent } from '../../components/compare-dialog/compare-dialog.component';
 
 export const MY_FORMATS = {
   parse: {
@@ -39,6 +40,7 @@ export class AdvManagementDetailComponent implements OnInit {
   advert: Advert;
   advertForm: FormGroup;
   provinces: any[];
+  advertHistory: any[];
   advertForms: any[] = [
     'Trụ pano Quảng cáo',
     'Trụ pano Quảng cáo ngoài trời',
@@ -73,12 +75,21 @@ export class AdvManagementDetailComponent implements OnInit {
     const params = this.activeRoute.snapshot.params;
     if (params.id) {
       this.spinner.show();
-      this.advertService.findById(params.id).subscribe(rs => {
+      this.advertService.findById(params.id).subscribe(async rs => {
         this.initFormData(rs.data);
         this.buildForm();
+        this.advertHistory = await this.initAdvertHistory(params.id);
         this.spinner.hide();
       });
     }
+  }
+
+  initAdvertHistory(advId): Promise<any> {
+    return new Promise((resolve, reject) => {
+      this.advertService.getChangeHistory(advId).subscribe(rs => {
+        resolve(rs);
+      });
+    });
   }
 
   initFormData(data) {
@@ -130,6 +141,7 @@ export class AdvManagementDetailComponent implements OnInit {
       type: data ? data.type : '',
       images: data ? data.images.filter(image => !image.map) : [],
       map: data ? (map.length > 0 ? map[0] : undefined) : undefined,
+      coordinates: data ? data.coordinates : '',
       ignoreError: data ? data.ignoreError : undefined
     };
   }
@@ -177,7 +189,8 @@ export class AdvManagementDetailComponent implements OnInit {
       advCompEndDate: this.advert.advCompEndDate,
       advCompNote: this.advert.advCompNote,
       price: this.advert.price,
-      createdBy: this.advert.createdBy
+      createdBy: this.advert.createdBy,
+      coordinates: this.advert.coordinates
     });
   }
 
@@ -197,7 +210,7 @@ export class AdvManagementDetailComponent implements OnInit {
     const params = {
       width: '400px',
       data: {
-        title: 'Thông báo',
+        title: this.translate.instant('common.info'),
         message: '',
         conflictedList: []
       }
@@ -234,7 +247,7 @@ export class AdvManagementDetailComponent implements OnInit {
     if (key === 'provinceCode') {
       const selectedProvince = this.provinces.find(province => province.code === value);
       if (selectedProvince) {
-        this.advertForm.controls['province'].setValue(selectedProvince.name);
+        this.advertForm.controls.province.setValue(selectedProvince.name);
       }
     }
   }
@@ -270,7 +283,7 @@ export class AdvManagementDetailComponent implements OnInit {
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
       reader.readAsDataURL(image);
-      reader.onload = _event => {
+      reader.onload = (event) => {
         return resolve(reader.result);
       };
     });
@@ -278,6 +291,13 @@ export class AdvManagementDetailComponent implements OnInit {
 
   removeImage(index) {
     this.advert.images.slice(index, 1);
+  }
+
+  openHistory() {
+    this.dialog.openCustomDialog(CompareDialogComponent, {
+      width: '90%',
+      data: this.advertHistory
+    });
   }
 }
 
@@ -325,5 +345,6 @@ export interface Advert {
   type: string;
   images: any[];
   map: any;
+  coordinates: any;
   ignoreError: boolean;
 }

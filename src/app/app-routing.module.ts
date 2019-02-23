@@ -11,7 +11,6 @@ const routes: Routes = [
     path: AppConfig.routes.login,
     loadChildren: './modules/authorize/authorize.module#AuthorizeModule'
   },
-  // { path: AppConfig.routes.auth, loadChildren: './modules/authorize/authorize.module#AuthorizeModule' },
   {
     path: AppConfig.routes.error404,
     loadChildren: './shared/pages/error404/error404.module#Error404Module'

@@ -8,7 +8,8 @@ export const environment = {
   user: 'http://localhost:8080/management/users',
   userRole: 'http://localhost:8080/management/userRoles',
   advert: 'http://localhost:8080/management/advs',
-  province: 'http://localhost:8080/management/provinces'
+  province: 'http://localhost:8080/management/provinces',
+  advertHistory: 'http://localhost:8080/management/advHistory'
 };
 
 /*

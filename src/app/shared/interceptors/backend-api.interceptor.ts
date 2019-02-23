@@ -14,13 +14,15 @@ import { throwError } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { Dialog } from '../services/dialog.service';
 import { TranslateService } from '@ngx-translate/core';
+import { Spinner } from '../services/spinner.service';
 
 @Injectable()
 export class BackendAPIInterceptor implements HttpInterceptor {
     constructor(
         private authService: AuthService,
         private dialog: Dialog,
-        private translate: TranslateService
+        private translate: TranslateService,
+        private spinner: Spinner
     ) {}
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
@@ -38,6 +40,7 @@ export class BackendAPIInterceptor implements HttpInterceptor {
                 }
             })
             .catch(response => {
+                this.spinner.hide();
                 if (response.status === 500 || response.status === 405) {
                     this.dialog.error({
                         title: 'Thông báo',
