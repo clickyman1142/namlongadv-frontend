@@ -36,7 +36,7 @@ export class AuthService {
         const loginToken = btoa(`${basicAuth.username}:${basicAuth.password}`);
         const headers = {
             'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8',
-            'Authorization': `Basic ${loginToken}`
+            Authorization: `Basic ${loginToken}`
         };
         const data = new URLSearchParams();
         data.set('grant_type', 'password');
@@ -53,7 +53,6 @@ export class AuthService {
     }
 
     storeSession(res) {
-        console.log(res.access_token);
         const jwtHelper = new JwtHelperService();
         of(jwtHelper.decodeToken(res.access_token)).subscribe(data => {
             if (data) {

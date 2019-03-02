@@ -27,6 +27,11 @@
         "no": "Không",
         "cancel": "Hủy",
         "ok": "Ok",
+        "save": "Lưu",
+        "publish": "Xuất Bản",
+        "republish": "Tái Xuất Bản",
+        "exportExcel": "Xuất Excel",
+        "exportPowerpoint": "Xuất Powerpoint",
         "error": {
             "server_error": "Lỗi máy chủ, vui lòng liên hệ admin",
             "bad_request": "Lỗi nhập liệu, vui lòng kiểm tra lại hoặc liên hệ với admin"

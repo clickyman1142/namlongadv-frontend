@@ -142,7 +142,8 @@ export class AdvManagementDetailComponent implements OnInit {
       images: data ? data.images.filter(image => !image.map) : [],
       map: data ? (map.length > 0 ? map[0] : undefined) : undefined,
       coordinates: data ? data.coordinates : '',
-      ignoreError: data ? data.ignoreError : undefined
+      ignoreError: data ? data.ignoreError : undefined,
+      imageMeta: []
     };
   }
 
@@ -204,7 +205,8 @@ export class AdvManagementDetailComponent implements OnInit {
     formData = {
       ...formData,
       images: this.advert.images,
-      map: this.advert.map
+      map: this.advert.map,
+      imageMetadata: this.advert.imageMeta
     };
 
     const params = {
@@ -257,26 +259,26 @@ export class AdvManagementDetailComponent implements OnInit {
   }
 
   get form() {
-      return this.advertForm;
+    return this.advertForm;
   }
 
   async changeImages(event, index) {
-    if (index !== -1) {
+    if (index !== -1) { // Map
       this.advert.images[index].file = event.target.files[0];
       const url = await this.getFileURL(event.target.files[0]);
       this.advert.images[index].url = url;
     } else {
       this.advert.images = [];
-      for (let i = 0; i < event.target.files.length; i++) {
-        const url = await this.getFileURL(event.target.files[i]);
-        this.advert.images.push({file: event.target.files[i], url});
+      for (const file of event.target.files) {
+        const url = await this.getFileURL(file);
+        this.advert.images.push({ file, url, selected: false });
       }
     }
   }
 
   async changeMap(event) {
     const url = await this.getFileURL(event.target.files[0]);
-    this.advert.map = {file: event.target.files[0], url};
+    this.advert.map = { file: event.target.files[0], url };
   }
 
   getFileURL(image: File): Promise<any> {
@@ -290,7 +292,7 @@ export class AdvManagementDetailComponent implements OnInit {
   }
 
   removeImage(index) {
-    this.advert.images.slice(index, 1);
+    this.advert.images.splice(index, 1);
   }
 
   openHistory() {
@@ -298,6 +300,58 @@ export class AdvManagementDetailComponent implements OnInit {
       width: '90%',
       data: this.advertHistory
     });
+  }
+
+  publish() {
+    const location = this.advertForm.controls.coordinates.value.split(', ');
+    const lat = location[0];
+    const lng = location[1];
+
+    let detail = '<p>Vị trí: ' + this.advertForm.controls.houseNo.value + ', ' + this.advertForm.controls.street.value
+      + ', ' + this.advertForm.controls.ward.value + ', ' + this.advertForm.controls.district.value
+      + ', ' + this.advertForm.controls.province.value + '</p>';
+    detail += '<p>Loại hình: ' + this.advertForm.controls.type.value + '</p>';
+    detail += '<p>Tầm nhìn: ' + this.advertForm.controls.views.value + '</p>';
+    detail += '<p>Kích thước: ' + this.advertForm.controls.heightSize.value + ' x ' + this.advertForm.controls.widthSize.value + '</p>';
+    detail += '<p>Mật độ: ' + this.advertForm.controls.flow.value + ' người/ngày</p>';
+    detail += '<p>Hình thức thực hiện: ' + this.advertForm.controls.implForm.value + '</p>';
+    detail += '<p>Hệ thống chiếu sáng: ' + this.advertForm.controls.lightSystem.value + '</p>';
+    detail += '<p>Tình trạng: Đang chào bán</p>';
+    detail += '<p>Đơn giá: Liên hệ để biết giá</p>';
+    detail += '<br/><br/>' + this.advertForm.controls.describe.value;
+
+    let published = '<p>Vị trí: ' + this.advertForm.controls.houseNo.value + ', '
+      + this.advertForm.controls.street.value
+      + ', ' + this.advertForm.controls.ward.value + ', '
+      + this.advertForm.controls.district.value
+      + ', ' + this.advertForm.controls.province.value + '</p>';
+    published += '<p>Loại hình: ' + this.advertForm.controls.type.value + '</p>';
+
+    const data = {
+      title: this.advertForm.controls.title.value + ' - ' + this.advert.code,
+      price: this.advertForm.controls.price.value,
+      description: '',
+      published: 0,
+      ordering: 0,
+      lat,
+      long: lng,
+      detail,
+      image3: undefined
+    };
+
+    // Prepare images to publish
+    // Map
+    if (this.advert.map) {
+      data.image3 = 'http://namlongadv.ddns.net:7070' + this.advert.map.url;
+    } else {
+      data.image3 = undefined;
+    }
+
+    this.advert.images.forEach((image, index) => {
+      data['image' + index] = 'http://namlongadv.ddns.net:7070' + image.url;
+    });
+
+    console.log(data);
   }
 }
 
@@ -347,4 +401,10 @@ export interface Advert {
   map: any;
   coordinates: any;
   ignoreError: boolean;
+  imageMeta: ImageMeta[];
+}
+
+export interface ImageMeta {
+  weight: number;
+  selected: boolean;
 }

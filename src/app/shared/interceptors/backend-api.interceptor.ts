@@ -61,7 +61,7 @@ export class BackendAPIInterceptor implements HttpInterceptor {
         if (!headers.has('Authorization')) {
             const jwtToken = this.authService.getJwtToken();
             return {
-                'Authorization': `${jwtToken.type} ${jwtToken.accessToken}`
+                Authorization: `${jwtToken.type} ${jwtToken.accessToken}`
             };
         }
     }

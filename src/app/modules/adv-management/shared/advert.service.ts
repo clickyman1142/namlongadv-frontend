@@ -34,7 +34,12 @@ export class AdvertService {
             }
         });
         // Process images list
+        advert.imageMeta = [];
         advert.images.forEach((image, index) => {
+            advert.imageMeta.push({
+                weight: index,
+                selected: image.selected
+            });
             if (image.file) { // New file
                 image = image.file;
             } else {
@@ -43,6 +48,7 @@ export class AdvertService {
             formData.set(`images[${index}]`, image);
         });
         formData.delete('images');
+        formData.set('imageMeta', JSON.stringify(advert.imageMeta));
         // Process map
         if (advert.map) {
             formData.set('map', advert.map.file ? advert.map.file : JSON.stringify({url: advert.map.url}));
