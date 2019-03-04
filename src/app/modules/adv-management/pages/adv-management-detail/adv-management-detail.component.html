@@ -17,24 +17,24 @@
             <input matInput placeholder="Số nhà" formControlName="houseNo">
           </mat-form-field>
           <mat-form-field>
-            <input matInput placeholder="Tên đường" formControlName="street">
+            <input matInput placeholder="Tên đường *" formControlName="street">
           </mat-form-field>
           <mat-form-field>
-            <input matInput placeholder="Phường" formControlName="ward">
+            <input matInput placeholder="Phường *" formControlName="ward">
           </mat-form-field>
           <mat-form-field>
-            <input matInput placeholder="Quận" formControlName="district">
+            <input matInput placeholder="Quận *" formControlName="district">
           </mat-form-field>
           <app-autocomplete
               [keyField]="'name'"
               [valueField]="'code'"
-              [fieldLabel]="'Tỉnh'" 
+              [fieldLabel]="'Tỉnh *'" 
               [options]="provinces"
               [exactRequired]="true"
               [selected]="form.controls.provinceCode.value"
               (changes)="setFormValue('provinceCode', $event)"></app-autocomplete>
           <mat-form-field>
-            <input matInput placeholder="Tọa độ" formControlName="coordinates">
+            <input matInput placeholder="Tọa độ *" formControlName="coordinates" pattern="[0-9]*,[0-9]*">
           </mat-form-field>
           <mat-form-field>
             <input matInput placeholder="Đơn giá" formControlName="price">
@@ -170,7 +170,7 @@
                 <mat-checkbox [checked]="image.selected" (change)="image.selected = $event.checked"></mat-checkbox>
                 <mat-icon (click)="removeImage(i)">delete_outline</mat-icon>
               </div>
-              <img *ngIf="!image.file" [src]="'http://localhost:8080/management/resources/images?url=' + image.url" />
+              <img *ngIf="!image.file" [src]="baseUrl + '/resources/images?url=' + image.url" />
               <img *ngIf="image.file" [src]="image.url" />
               <input type="file" [ngStyle]="{marginTop: '10px'}" (change)="changeImages($event, i)" />
             </div>
@@ -185,7 +185,7 @@
             <div class="image-actions">
               <mat-icon>delete_outline</mat-icon>
             </div>
-            <img *ngIf="advert.map && !advert.map.file" [src]="'http://localhost:8080/management/resources/images?url=' + advert.map.url" />
+            <img *ngIf="advert.map && !advert.map.file" [src]="baseUrl + '/resources/images?url=' + advert.map.url" />
             <img *ngIf="advert.map && advert.map.file" [src]="advert.map.url" />
             <input type="file" [ngStyle]="{marginTop: '10px'}" (change)="changeMap($event)" />
           </div>

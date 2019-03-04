@@ -25,7 +25,7 @@ export class UserManagementDetailComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private formBuilder: FormBuilder,
     private snackBar: SnackBar,
-    private _location: Location,
+    public _location: Location,
     private userRoleService: UserRoleService
   ) {
     this.user = {
@@ -49,7 +49,7 @@ export class UserManagementDetailComponent implements OnInit, OnDestroy {
 
     this.subscriber = this.route.params.subscribe(params => {
       if (!params.id) { return; }
-      this.userService.getById(params['id']).subscribe(rs => {
+      this.userService.getById(params.id).subscribe(rs => {
         if (!rs) { return; }
         this.user = {
           id: rs.data.id,

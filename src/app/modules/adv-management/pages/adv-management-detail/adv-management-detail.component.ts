@@ -37,6 +37,7 @@ export const MY_FORMATS = {
   ]
 })
 export class AdvManagementDetailComponent implements OnInit {
+  baseUrl = AppConfig.endpoints.baseUrl;
   advert: Advert;
   advertForm: FormGroup;
   provinces: any[];
@@ -159,11 +160,11 @@ export class AdvManagementDetailComponent implements OnInit {
       code: this.advert.code,
       provinceCode: this.advert.provinceCode,
       title: [this.advert.title, Validators.required],
-      street: this.advert.street,
+      street: [this.advert.street, Validators.required],
       houseNo: this.advert.houseNo,
-      ward: this.advert.ward,
-      district: this.advert.district,
-      province: this.advert.province,
+      ward: [this.advert.ward, Validators.required],
+      district: [this.advert.district, Validators.required],
+      province: [this.advert.province, Validators.required],
       widthSize: this.advert.widthSize,
       heightSize: this.advert.heightSize,
       amount: this.advert.amount,
@@ -191,7 +192,7 @@ export class AdvManagementDetailComponent implements OnInit {
       advCompNote: this.advert.advCompNote,
       price: this.advert.price,
       createdBy: this.advert.createdBy,
-      coordinates: this.advert.coordinates
+      coordinates: [this.advert.coordinates, Validators.required]
     });
   }
 
@@ -340,16 +341,18 @@ export class AdvManagementDetailComponent implements OnInit {
     };
 
     // Prepare images to publish
+    this.advert.images.forEach((image, index) => {
+      if (index === 3) {
+        index++;
+      }
+      data['image' + index] = this.baseUrl + image.url;
+    });
     // Map
     if (this.advert.map) {
-      data.image3 = 'http://namlongadv.ddns.net:7070' + this.advert.map.url;
+      data.image3 = this.baseUrl + this.advert.map.url;
     } else {
       data.image3 = undefined;
     }
-
-    this.advert.images.forEach((image, index) => {
-      data['image' + index] = 'http://namlongadv.ddns.net:7070' + image.url;
-    });
 
     console.log(data);
   }

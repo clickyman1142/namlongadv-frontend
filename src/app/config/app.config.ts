@@ -17,6 +17,7 @@ export const AppConfig = {
         settings: 'settings'
     },
     endpoints: {
+        baseUrl: environment.baseUrl,
         uaa: environment.uaa,
         user: environment.user,
         userRole: environment.userRole,
