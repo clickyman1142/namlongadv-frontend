@@ -11,6 +11,8 @@ export const environment = {
   advert: 'http://localhost:8080/management/advs',
   province: 'http://localhost:8080/management/provinces',
   advertHistory: 'http://localhost:8080/management/advHistory',
+  appConfig: 'http://localhost:8080/management/appConfig',
+  billBoard: 'https://billboardquangcao.com/api.php/firerox_jv_article',
   // baseUrl: 'http://ec2-13-229-233-124.ap-southeast-1.compute.amazonaws.com/api/management',
   // uaa: 'http://ec2-13-229-233-124.ap-southeast-1.compute.amazonaws.com/api/management/oauth/token',
   // user: 'http://ec2-13-229-233-124.ap-southeast-1.compute.amazonaws.com/api/management/users',

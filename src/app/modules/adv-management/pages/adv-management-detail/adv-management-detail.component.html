@@ -8,73 +8,73 @@
       <mat-card-content fxLayout="column">
         <div class="basic-info" fxLayout="column">
           <mat-form-field *ngIf="advert.code">
-            <input matInput placeholder="Mã" formControlName="code" readonly>
+            <input matInput placeholder="{{'advert.form.code' | translate}}" formControlName="code" readonly>
           </mat-form-field>
           <mat-form-field>
-            <input matInput placeholder="Tiêu đề *" formControlName="title">
+            <input matInput placeholder="{{'advert.form.title' | translate}}" formControlName="title">
           </mat-form-field>
           <mat-form-field>
-            <input matInput placeholder="Số nhà" formControlName="houseNo">
+            <input matInput placeholder="{{'advert.form.houseNo' | translate}}" formControlName="houseNo">
           </mat-form-field>
           <mat-form-field>
-            <input matInput placeholder="Tên đường *" formControlName="street">
+            <input matInput placeholder="{{'advert.form.street' | translate}}" formControlName="street">
           </mat-form-field>
           <mat-form-field>
-            <input matInput placeholder="Phường *" formControlName="ward">
+            <input matInput placeholder="{{'advert.form.ward' | translate}}" formControlName="ward">
           </mat-form-field>
           <mat-form-field>
-            <input matInput placeholder="Quận *" formControlName="district">
+            <input matInput placeholder="{{'advert.form.district' | translate}}" formControlName="district">
           </mat-form-field>
           <app-autocomplete
               [keyField]="'name'"
               [valueField]="'code'"
-              [fieldLabel]="'Tỉnh *'" 
+              [fieldLabel]="'advert.form.district' | translate" 
               [options]="provinces"
               [exactRequired]="true"
               [selected]="form.controls.provinceCode.value"
               (changes)="setFormValue('provinceCode', $event)"></app-autocomplete>
           <mat-form-field>
-            <input matInput placeholder="Tọa độ *" formControlName="coordinates" pattern="[0-9]*,[0-9]*">
+            <input matInput placeholder="{{'advert.form.coordinates' | translate}}" formControlName="coordinates" pattern="[0-9]*,[0-9]*">
           </mat-form-field>
           <mat-form-field>
-            <input matInput placeholder="Đơn giá" formControlName="price">
+            <input matInput placeholder="{{'advert.form.price' | translate}}" formControlName="price">
           </mat-form-field>
           <mat-form-field>
-            <input matInput placeholder="Chiều rộng" formControlName="widthSize">
+            <input matInput placeholder="{{'advert.form.widthSize' | translate}}" formControlName="widthSize">
           </mat-form-field>
           <mat-form-field>
-            <input matInput placeholder="Chiều dài" formControlName="heightSize">
+            <input matInput placeholder="{{'advert.form.heightSize' | translate}}" formControlName="heightSize">
           </mat-form-field>
           <mat-form-field>
-            <input matInput placeholder="Số lượng" formControlName="amount">
+            <input matInput placeholder="{{'advert.form.amount' | translate}}" formControlName="amount">
           </mat-form-field>
           <mat-form-field>
-            <input matInput placeholder="Tầm nhìn" formControlName="views">
+            <input matInput placeholder="{{'advert.form.views' | translate}}" formControlName="views">
           </mat-form-field>
           <mat-form-field>
-            <input matInput placeholder="Lưu lượng" formControlName="flow">
+            <input matInput placeholder="{{'advert.form.flow' | translate}}" formControlName="flow">
           </mat-form-field>
           <mat-form-field>
-            <input matInput placeholder="Thời gian thực hiện" type="number" formControlName="implTime">
+            <input matInput placeholder="{{'advert.form.implTime' | translate}}" type="number" formControlName="implTime">
           </mat-form-field>
           <mat-form-field>
-            <input matInput placeholder="Hình thức thực hiện" formControlName="implForm">
+            <input matInput placeholder="{{'advert.form.implForm' | translate}}" formControlName="implForm">
           </mat-form-field>
           <mat-form-field>
-            <input matInput placeholder="Hệ thống chiếu sáng" formControlName="lightSystem">
+            <input matInput placeholder="{{'advert.form.lightSystem' | translate}}" formControlName="lightSystem">
           </mat-form-field>
           <mat-form-field>
-            <mat-select placeholder="Loại hình" formControlName="type">
+            <mat-select placeholder="{{'advert.form.type' | translate}}" formControlName="type">
               <mat-option *ngFor="let type of advertForms" [value]="type">
                 {{type}}
               </mat-option>
             </mat-select>
           </mat-form-field>
           <mat-form-field *ngIf="advert.createdBy">
-            <input matInput readonly placeholder="Người tạo" formControlName="createdBy">
+            <input matInput readonly placeholder="{{'advert.form.createdBy' | translate}}" formControlName="createdBy">
           </mat-form-field>
           <mat-form-field>
-            <textarea matInput placeholder="Mô tả" formControlName="describe"></textarea>
+            <textarea matInput placeholder="{{'advert.form.describe' | translate}}" formControlName="describe"></textarea>
           </mat-form-field>
         </div>
         <div fxLayout="row">
@@ -82,33 +82,33 @@
             <mat-card-title>Thông tin chủ nhà</mat-card-title>
             <mat-card-content fxLayout="column">
               <mat-form-field>
-                <input matInput placeholder="Số điện thoại" formControlName="ownerPhone">
+                <input matInput placeholder="{{'advert.form.ownerPhone' | translate}}" formControlName="ownerPhone">
               </mat-form-field>
               <mat-form-field>
-                <input matInput placeholder="Email" formControlName="ownerEmail">
+                <input matInput placeholder="{{'advert.form.ownerEmail' | translate}}" formControlName="ownerEmail">
               </mat-form-field>
               <mat-form-field>
-                <input matInput placeholder="Giá" formControlName="ownerPrice">
+                <input matInput placeholder="{{'advert.form.ownerPrice' | translate}}" formControlName="ownerPrice">
               </mat-form-field>
               <mat-form-field>
-                <input matInput placeholder="Người liên hệ" formControlName="ownerContactPerson">
+                <input matInput placeholder="{{'advert.form.ownerContactPerson' | translate}}" formControlName="ownerContactPerson">
               </mat-form-field>
               <mat-form-field>
-                <input matInput placeholder="Ngày bắt đầu" (click)="pickerOwnerStart.open()"
+                <input matInput placeholder="{{'advert.form.ownerStartDate' | translate}}" (click)="pickerOwnerStart.open()"
                 [max]="form.controls.ownerEndDate.value"
                 [matDatepicker]="pickerOwnerStart" formControlName="ownerStartDate">
                 <mat-datepicker-toggle matSuffix [for]="pickerOwnerStart"></mat-datepicker-toggle>
                 <mat-datepicker #pickerOwnerStart></mat-datepicker>
               </mat-form-field>
               <mat-form-field>
-                <input matInput placeholder="Ngày kết thúc" (click)="pickerOwnerEnd.open()"
+                <input matInput placeholder="{{'advert.form.ownerEndDate' | translate}}" (click)="pickerOwnerEnd.open()"
                 [min]="form.controls.ownerStartDate.value"
                 [matDatepicker]="pickerOwnerEnd" formControlName="ownerEndDate">
                 <mat-datepicker-toggle matSuffix [for]="pickerOwnerEnd"></mat-datepicker-toggle>
                 <mat-datepicker #pickerOwnerEnd></mat-datepicker>
               </mat-form-field>
               <mat-form-field>
-                <textarea matInput placeholder="Ghi chú" formControlName="ownerNote"></textarea>
+                <textarea matInput placeholder="{{'advert.form.ownerNote' | translate}}" formControlName="ownerNote"></textarea>
               </mat-form-field>
             </mat-card-content>
           </mat-card>
@@ -116,36 +116,36 @@
             <mat-card-title>Thông tin CTQC</mat-card-title>
             <mat-card-content fxLayout="column">
               <mat-form-field>
-                <input matInput placeholder="Tên công ty" formControlName="advCompName">
+                <input matInput placeholder="{{'advert.form.advCompName' | translate}}" formControlName="advCompName">
               </mat-form-field>
               <mat-form-field>
-                <input matInput placeholder="Số điện thoại" formControlName="advCompPhone">
+                <input matInput placeholder="{{'advert.form.advCompPhone' | translate}}" formControlName="advCompPhone">
               </mat-form-field>
               <mat-form-field>
-                <input matInput placeholder="Email" formControlName="advCompEmail">
+                <input matInput placeholder="{{'advert.form.advCompEmail' | translate}}" formControlName="advCompEmail">
               </mat-form-field>
               <mat-form-field>
-                <input matInput placeholder="Giá" formControlName="advCompPrice">
+                <input matInput placeholder="{{'advert.form.advCompPrice' | translate}}" formControlName="advCompPrice">
               </mat-form-field>
               <mat-form-field>
-                <input matInput placeholder="Người liên hệ" formControlName="advCompContactPerson">
+                <input matInput placeholder="{{'advert.form.advCompContactPerson' | translate}}" formControlName="advCompContactPerson">
               </mat-form-field>
               <mat-form-field>
-                <input matInput placeholder="Ngày bắt đầu" (click)="pickerCompStart.open()"
+                <input matInput placeholder="{{'advert.form.advCompStartDate' | translate}}" (click)="pickerCompStart.open()"
                 [max]="form.controls.advCompEndDate.value"
                 [matDatepicker]="pickerCompStart" formControlName="advCompStartDate">
                 <mat-datepicker-toggle matSuffix [for]="pickerCompStart"></mat-datepicker-toggle>
                 <mat-datepicker #pickerCompStart></mat-datepicker>
               </mat-form-field>
               <mat-form-field>
-                <input matInput placeholder="Ngày kết thúc" (click)="pickerCompEnd.open()"
+                <input matInput placeholder="{{'advert.form.advCompEndDate' | translate}}" (click)="pickerCompEnd.open()"
                 [min]="form.controls.advCompStartDate.value"
                 [matDatepicker]="pickerCompEnd" formControlName="advCompEndDate">
                 <mat-datepicker-toggle matSuffix [for]="pickerCompEnd"></mat-datepicker-toggle>
                 <mat-datepicker #pickerCompEnd></mat-datepicker>
               </mat-form-field>
               <mat-form-field>
-                <textarea matInput placeholder="Ghi chú" formControlName="advCompNote"></textarea>
+                <textarea matInput placeholder="{{'advert.form.advCompNote' | translate}}" formControlName="advCompNote"></textarea>
               </mat-form-field>
             </mat-card-content>
           </mat-card>
@@ -156,12 +156,15 @@
         <button type="button" [disabled]="f.form.invalid"
           (click)="publish()"
           mat-raised-button color="primary">{{advert.publishedDate ? 'common.republish' : 'common.publish' | translate}}</button>
+        <button type="button" [disabled]="f.form.invalid"
+          (click)="unpublish()" *ngIf="advert.publishedDate"
+          mat-raised-button color="primary">{{'common.unpublish' | translate}}</button>
         <button type="submit" [disabled]="f.form.invalid" mat-raised-button color="primary">{{'common.save' | translate}}</button>
       </mat-card-actions>
     </mat-card>
     <div class="media" fxLayout="column" fxFlex="1 1 20%">
       <mat-card class="normal">
-        <mat-card-title>Hình ảnh</mat-card-title>
+        <mat-card-title>{{'advert.form.images' | translate}}</mat-card-title>
         <mat-card-content fxLayout="column">
           <div cdkDropList class="images" (cdkDropListDropped)="drop($event)">
             <div class="image" *ngFor="let image of advert.images; let i = index;" cdkDrag fxLayout="column">
@@ -179,7 +182,7 @@
         </mat-card-content>
       </mat-card>
       <mat-card class="map" [ngStyle]="{marginTop: '10px'}">
-        <mat-card-title>Map</mat-card-title>
+        <mat-card-title>{{'advert.form.map' | translate}}</mat-card-title>
         <mat-card-content class="images" fxLayout="column">
           <div class="image" fxLayout="column">
             <div class="image-actions">

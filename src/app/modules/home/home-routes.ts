@@ -10,7 +10,7 @@ const routes: Routes = [
         children: [
             {
                 path: '',
-                redirectTo: AppConfig.routes.advManagement,
+                loadChildren: '../dashboard/dashboard.module#DashboardModule',
                 pathMatch: 'full',
             },
             {

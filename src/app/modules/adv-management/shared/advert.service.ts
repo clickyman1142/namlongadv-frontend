@@ -69,4 +69,21 @@ export class AdvertService {
     getChangeHistory(advId) {
         return this.httpClient.get(`${AppConfig.endpoints.advertHistory}/${advId}`);
     }
+
+    checkPublished(publishedId) {
+        return this.httpClient.get(`${AppConfig.endpoints.billBoard}/${publishedId}`);
+    }
+
+    updatePublication(publishedId, data) {
+        const params = Object.keys(data).map(key => `${key}=${data[key]}`).join('&');
+        return this.httpClient.get(`${AppConfig.endpoints.billBoard}/${publishedId}?${params}`);
+    }
+
+    createPublication(data) {
+        return this.httpClient.post(`${AppConfig.endpoints.billBoard}`, data);
+    }
+
+    unpublish(publishedId) {
+        return this.httpClient.delete(`${AppConfig.endpoints.billBoard}/${publishedId}`);
+    }
 }

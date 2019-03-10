@@ -355,6 +355,48 @@ export class AdvManagementDetailComponent implements OnInit {
     }
 
     console.log(data);
+    this.spinner.show();
+    if (this.advert.publishedId && this.advertService.checkPublished(this.advert.publishedId)) {
+      this.advertService.updatePublication(this.advert.publishedId, data).subscribe(res => {
+        this.dialog.info({
+          title: this.translate.instant('advert.publish.update_success')
+        });
+        this.spinner.hide();
+      }, err => {
+        console.log(err);
+        this.dialog.open({
+          title: this.translate.instant('advert.publish.update_failed'),
+          width: '200px'
+        });
+        this.spinner.hide();
+      });
+    } else {
+      this.advertService.createPublication(data).subscribe(res => {
+        this.dialog.info({
+          title: this.translate.instant('advert.publish.create_success')
+        });
+        this.spinner.hide();
+      }, err => {
+        console.log(err);
+        this.dialog.info({
+          title: this.translate.instant('advert.publish.create_failed')
+        });
+        this.spinner.hide();
+      });
+    }
+  }
+
+  unpublish() {
+    this.advertService.unpublish(this.advert.publishedId).subscribe(res => {
+      this.dialog.info({
+        title: this.translate.instant('advert.publish.delete_success')
+      });
+    }, err => {
+      console.log(err);
+      this.dialog.error({
+        title: this.translate.instant('advert.publish.delete_failed')
+      });
+    });
   }
 }
 

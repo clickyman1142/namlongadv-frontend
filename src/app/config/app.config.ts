@@ -14,7 +14,8 @@ export const AppConfig = {
         companyManagement: 'company-management',
         customerManagement: 'customer-management',
         userManagement: 'user-management',
-        settings: 'settings'
+        settings: 'settings',
+        dashboard: 'dashboard'
     },
     endpoints: {
         baseUrl: environment.baseUrl,
@@ -23,7 +24,9 @@ export const AppConfig = {
         userRole: environment.userRole,
         advert: environment.advert,
         province: environment.province,
-        advertHistory: environment.advertHistory
+        advertHistory: environment.advertHistory,
+        billBoard: environment.billBoard,
+        appConfig: environment.appConfig
     },
     generalConfig: {
         dateFormat: 'DD/MM/YYYY',
