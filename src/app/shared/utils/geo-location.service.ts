@@ -6,6 +6,7 @@ export class GeoLocationService {
     public getPosition(): Observable<Position> {
         return new Observable(observable => {
             navigator.geolocation.watchPosition((pos: Position) => {
+                sessionStorage.setItem('position', JSON.stringify(pos.coords));
                 observable.next(pos);
             });
         });

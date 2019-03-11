@@ -14,6 +14,7 @@ import { AppConfig } from 'src/app/config/app.config';
 import { ProvinceService } from 'src/app/shared/services/province.service';
 import { AddressConflictDialogComponent } from '../../components/address-conflict-dialog/address-conflict-dialog.component';
 import { CompareDialogComponent } from '../../components/compare-dialog/compare-dialog.component';
+import { ICoord } from 'src/app/modules/dashboard/components/map/map.component';
 
 export const MY_FORMATS = {
   parse: {
@@ -42,6 +43,8 @@ export class AdvManagementDetailComponent implements OnInit {
   advertForm: FormGroup;
   provinces: any[];
   advertHistory: any[];
+  marker: ICoord;
+  centerCoord: ICoord;
   advertForms: any[] = [
     'Trụ pano Quảng cáo',
     'Trụ pano Quảng cáo ngoài trời',
@@ -95,6 +98,7 @@ export class AdvManagementDetailComponent implements OnInit {
 
   initFormData(data) {
     this.buildProvinceOptions();
+    this.centerCoord = JSON.parse(sessionStorage.getItem('position'));
 
     const map = data ? data.images.filter(image => image.map) : [];
 
@@ -137,7 +141,7 @@ export class AdvManagementDetailComponent implements OnInit {
       createdDate: data ? data.createdDate : 0,
       updatedDate: data ? data.updatedDate : 0,
       trash: data ? data.trash : false,
-      publishedDate: data ? (data.publishedDate ? moment(data.publishedDate) : undefined) : moment(),
+      publishedDate: data ? (data.publishedDate ? moment(data.publishedDate) : undefined) : undefined,
       publishedId: data ? data.publishedId : 0,
       type: data ? data.type : '',
       images: data ? data.images.filter(image => !image.map) : [],
@@ -193,6 +197,14 @@ export class AdvManagementDetailComponent implements OnInit {
       price: this.advert.price,
       createdBy: this.advert.createdBy,
       coordinates: [this.advert.coordinates, Validators.required]
+    });
+    this.setCoord();
+    this.handleFormChanges();
+  }
+
+  handleFormChanges() {
+    this.advertForm.controls.coordinates.valueChanges.subscribe(val => {
+      this.setCoord();
     });
   }
 
@@ -397,6 +409,22 @@ export class AdvManagementDetailComponent implements OnInit {
         title: this.translate.instant('advert.publish.delete_failed')
       });
     });
+  }
+
+  setCoord() {
+    if (this.advertForm.controls.coordinates.value) {
+      const coords = this.advertForm.controls.coordinates.value.split(',');
+      this.marker = {
+        latitude: Number(coords[0].trim()),
+        longitude: Number(coords[1].trim())
+      };
+    } else {
+      const coords = JSON.parse(sessionStorage.getItem('position'));
+      this.marker = {
+        latitude: Number(coords.latitude),
+        longitude: Number(coords.longitude)
+      };
+    }
   }
 }
 

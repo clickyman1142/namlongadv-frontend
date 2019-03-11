@@ -34,7 +34,8 @@
               [selected]="form.controls.provinceCode.value"
               (changes)="setFormValue('provinceCode', $event)"></app-autocomplete>
           <mat-form-field>
-            <input matInput placeholder="{{'advert.form.coordinates' | translate}}" formControlName="coordinates" pattern="[0-9]*,[0-9]*">
+            <input matInput placeholder="{{'advert.form.coordinates' | translate}}"
+              formControlName="coordinates" pattern="([-+]?)([\d]{1,2})(((\.)(\d+)(,)))(\s*)(([-+]?)([\d]{1,3})((\.)(\d+))?)">
           </mat-form-field>
           <mat-form-field>
             <input matInput placeholder="{{'advert.form.price' | translate}}" formControlName="price">
@@ -150,6 +151,10 @@
             </mat-card-content>
           </mat-card>
         </div>
+        <agm-map [latitude]="centerCoord.latitude" [longitude]="centerCoord.longitude">
+          <agm-marker *ngIf="marker" [latitude]="marker.latitude" [longitude]="marker.longitude">
+          </agm-marker>
+        </agm-map>
       </mat-card-content>
       <mat-card-actions fxLayoutAlign="flex-end">
         <button type="button" mat-raised-button color="warn" routerLink="/">{{'common.cancel' | translate}}</button>

@@ -11,6 +11,7 @@ import { ProvinceService } from 'src/app/shared/services/province.service';
 import { TranslateModule, TranslateLoader, TranslateService } from '@ngx-translate/core';
 import { createTranslateLoader } from 'src/app/app.module';
 import { HttpClient } from '@angular/common/http';
+import { AgmCoreModule } from '@agm/core';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,9 @@ import { HttpClient } from '@angular/common/http';
         deps: [HttpClient]
       }
     }),
+    AgmCoreModule.forRoot({
+      apiKey: 'AIzaSyDCa1LUe1vOczX1hO_iGYgyo8p_jYuGOPU'
+    })
   ],
   exports: [
     AdvManagementRoutingModule

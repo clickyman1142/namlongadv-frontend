@@ -31,7 +31,6 @@ export class MapComponent implements OnInit {
           latitude: rs.coords.latitude,
           longitude: rs.coords.longitude
         } as ICoord;
-        sessionStorage.setItem('position', JSON.stringify(this.centerCoord));
         this.spinner.hide();
       });
     }
