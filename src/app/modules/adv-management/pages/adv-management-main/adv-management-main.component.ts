@@ -34,6 +34,7 @@ export const MY_FORMATS = {
 })
 export class AdvManagementMainComponent implements OnInit {
   _moment = _moment;
+  baseUrl = AppConfig.endpoints.baseUrl;
 
   displayedColumns: string[] = ['select', 'position', 'code', 'title', 'address',
     'size', 'createdDate', 'subTitle', 'contact', 'images', 'actions'];

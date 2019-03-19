@@ -1,5 +1,5 @@
 <div class="user-detail" fxLayout="row">
-  <mat-card fxFlex="1 1 60%">
+  <mat-card fxFlex="1 1 60%" fxFlex.lt-sm="1 1 100%">
     <form [formGroup]="userForm" #f="ngForm" (submit)="onSave()" autocomplete="off">
       <mat-card-title>{{user.id ? 'Cập nhật tài khoản' : 'Tạo mới tài khoản '}}</mat-card-title>
       <mat-card-content fxLayout="column">

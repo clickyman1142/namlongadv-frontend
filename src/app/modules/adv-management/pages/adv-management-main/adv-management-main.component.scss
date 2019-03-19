@@ -4,6 +4,16 @@
     }
     .advs {
         margin-bottom: 20px;
+        .image-container {
+            width: 100px;
+            height: 65px;
+            float: left;
+            padding: 3px;
+            img {
+                width: 100%;
+                height: 100%;
+            }
+        }
     }
     .filter-panel {
         .filter-group {

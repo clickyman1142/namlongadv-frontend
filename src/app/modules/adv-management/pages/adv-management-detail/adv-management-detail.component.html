@@ -1,5 +1,5 @@
 <form (submit)="onSave()" [formGroup]="advertForm" #f="ngForm" autocomplete="off">
-  <div class="adv-detail" fxLayout="row">
+  <div class="adv-detail" fxLayout.md="row" fxLayout.lt-md="column" fxLayoutGap="10px">
     <mat-card fxFlex="1 1 80%">
       <mat-card-title>
         {{advert.id ? 'Cập nhật địa điểm' : 'Tạo mới địa điểm'}}

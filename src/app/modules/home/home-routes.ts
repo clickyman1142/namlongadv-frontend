@@ -12,6 +12,7 @@ const routes: Routes = [
                 path: '',
                 loadChildren: '../dashboard/dashboard.module#DashboardModule',
                 pathMatch: 'full',
+                canActivate: [ AuthGuard ]
             },
             {
                 path: AppConfig.routes.advManagement,
@@ -20,19 +21,23 @@ const routes: Routes = [
             },
             {
                 path: AppConfig.routes.companyManagement,
-                loadChildren: '../company-management/company-management.module#CompanyManagementModule'
+                loadChildren: '../company-management/company-management.module#CompanyManagementModule',
+                canActivate: [ AuthGuard ]
             },
             {
                 path: AppConfig.routes.customerManagement,
-                loadChildren: '../customer-management/customer-management.module#CustomerManagementModule'
+                loadChildren: '../customer-management/customer-management.module#CustomerManagementModule',
+                canActivate: [ AuthGuard ]
             },
             {
                 path: AppConfig.routes.userManagement,
-                loadChildren: '../user-management/user-management.module#UserManagementModule'
+                loadChildren: '../user-management/user-management.module#UserManagementModule',
+                canActivate: [ AuthGuard ]
             },
             {
                 path: AppConfig.routes.settings,
-                loadChildren: '../settings/settings.module#SettingsModule'
+                loadChildren: '../settings/settings.module#SettingsModule',
+                canActivate: [ AuthGuard ]
             }
         ]
     }

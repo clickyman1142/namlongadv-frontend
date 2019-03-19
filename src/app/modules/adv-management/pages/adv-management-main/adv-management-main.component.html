@@ -10,7 +10,7 @@
           Lọc
         </mat-panel-title>
       </mat-expansion-panel-header>
-      <mat-panel-description fxLayout="column" fxFlex="wrap">
+      <mat-panel-description fxLayout="column" fxFlex="wrap" fxLayoutGap="10px">
         <div class="filter-group date-range" fxLayoutAlign="end">
           <mat-form-field>
             <input matInput readonly placeholder="Bắt đầu từ ngày"
@@ -127,7 +127,14 @@
 
       <ng-container matColumnDef="images">
         <th mat-header-cell *matHeaderCellDef> Hình ảnh </th>
-        <td mat-cell *matCellDef="let element"></td>
+        <td mat-cell *matCellDef="let element">
+          <div class="image-container" *ngFor="let image of element.images">
+            <ng-container *ngIf="image.show">
+              <img [src]="baseUrl + '/resources/images?url=' + image.url" />
+            </ng-container>
+          </div>
+          <span class="clear"></span>
+        </td>
       </ng-container>
 
       <ng-container matColumnDef="actions">

@@ -12,6 +12,7 @@ import { TranslateModule, TranslateLoader, TranslateService } from '@ngx-transla
 import { createTranslateLoader } from 'src/app/app.module';
 import { HttpClient } from '@angular/common/http';
 import { AgmCoreModule } from '@agm/core';
+import { DeferLoadModule } from '@trademe/ng-defer-load';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { AgmCoreModule } from '@agm/core';
     }),
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyDCa1LUe1vOczX1hO_iGYgyo8p_jYuGOPU'
-    })
+    }),
+    DeferLoadModule
   ],
   exports: [
     AdvManagementRoutingModule
