@@ -4,6 +4,7 @@
     }
     .advs {
         margin-bottom: 20px;
+        font-size: 12px;
         .image-container {
             width: 100px;
             height: 65px;
@@ -13,6 +14,9 @@
                 width: 100%;
                 height: 100%;
             }
+        }
+        td {
+            padding: 5px;
         }
     }
     .filter-panel {
@@ -38,5 +42,9 @@
     }
     mat-form-field {
         width: 100%;
+    }
+
+    .advs {
+        margin: 20px 0;
     }
 }

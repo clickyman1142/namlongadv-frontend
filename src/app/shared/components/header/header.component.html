@@ -3,16 +3,16 @@
     <div class="actions" fxLayout="row" fxLayoutAlign="center center">
         <button class="matMenu" mat-stroked-button [matMenuTriggerFor]="menu">
             <img src="../../../../assets/images/avatar.png" class="avatar">
-            Ngo Bao Toan
+            {{userInfo.name}}
         </button>
         <mat-menu #menu="matMenu">
-            <button mat-menu-item>
+            <button mat-menu-item routerLink="/user-management/{{userInfo.user_id}}">
                 <mat-icon>voicemail</mat-icon>
-                <span>Profile</span>
+                <span>{{'menu.profile' | translate}}</span>
             </button>
-            <button mat-menu-item routerLink="/login">
+            <button mat-menu-item (click)="logout()">
                 <mat-icon>voicemail</mat-icon>
-                <span>Logout</span>
+                <span>{{'menu.logout' | translate}}</span>
             </button>
         </mat-menu>
     </div>

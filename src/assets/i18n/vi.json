@@ -77,6 +77,7 @@
         "cancel": "Hủy",
         "ok": "Ok",
         "save": "Lưu",
+        "create": "Tạo Mới",
         "publish": "Xuất Bản",
         "republish": "Tái Xuất Bản",
         "unpublish": "Hủy xuất bản",
@@ -86,5 +87,9 @@
             "server_error": "Lỗi máy chủ, vui lòng liên hệ admin",
             "bad_request": "Lỗi nhập liệu, vui lòng kiểm tra lại hoặc liên hệ với admin"
         }
+    },
+    "menu": {
+        "profile": "Thông tin cá nhân",
+        "logout": "Đăng xuất"
     }
 }
