@@ -1,3 +1,109 @@
 {
-    "address_conflict_confirm": "Address conflicted, Do you still want to create this?"
+    "advert": {
+        "add_success": "Add successfully",
+        "add_fail": "Failed to add",
+        "update_success": "Update successfully",
+        "update_fail": "Failed to update",
+        "address_conflict_confirm": "Address conflict. Do you want to add?",
+        "confirm_delete_action": "Are you sure you want to delete?",
+        "delete_success": "Delete successfully",
+        "delete_fail": "Failed to delete",
+        "dialog": {
+            "history": "Logs"
+        },
+        "publish": {
+            "create_success": "Published successfully",
+            "create_failed": "Failed to published",
+            "update_success": "Republished successfully",
+            "update_failed": "Failed to republish",
+            "delete_success": "Destroy successfully",
+            "delete_failed": "Failed to destroy"
+        },
+        "form": {
+            "code": "Code",
+            "title": "Title *",
+            "street": "Street *",
+            "houseNo": "House No *",
+            "ward": "Ward *",
+            "district": "District *",
+            "province": "Province *",
+            "widthSize": "Width",
+            "heightSize": "Height",
+            "amount": "Amount",
+            "describe": "Description",
+            "views": "Tầm nhìn",
+            "flow": "Lưu lượng",
+            "implTime": "Implement time",
+            "implForm": "Implement form",
+            "lightSystem": "Light system",
+            "ownerPhone": "Phone",
+            "ownerEmail": "Email",
+            "ownerPrice": "Price",
+            "ownerContactPerson": "Contact person",
+            "ownerStartDate": "Start date",
+            "ownerEndDate": "End date",
+            "ownerNote": "Note",
+            "advCompPhone": "Phone",
+            "advCompEmail": "Email",
+            "advCompPrice": "Price",
+            "advCompContactPerson": "Contact person",
+            "advCompName": "Company name",
+            "advCompStartDate": "Start date",
+            "advCompEndDate": "End date",
+            "advCompNote": "Note",
+            "price": "Price",
+            "createdBy": "Created by",
+            "createdDate": "Created date",
+            "updatedDate": "Updated date",
+            "type": "Type",
+            "images": "Images",
+            "map": "Map",
+            "coordinates": "Coordinates"
+        }
+    },
+    "table": {
+        "advert-compare": {
+            "updatedDate": "Updated Date",
+            "oldInfo": "Old Info",
+            "newInfo": "New Info",
+            "createdBy": "Created by",
+            "modBy": "Updated by"
+        }
+    },
+    "common": {
+        "info": "Info",
+        "yes": "Yes",
+        "no": "No",
+        "cancel": "Cancel",
+        "ok": "Ok",
+        "save": "Save",
+        "create": "Create",
+        "publish": "Publish",
+        "republish": "Re-publish",
+        "unpublish": "Un-publish",
+        "exportExcel": "Export Excel",
+        "exportPowerpoint": "Export Powerpoint",
+        "error": {
+            "server_error": "Server error, plz contact administrator.",
+            "bad_request": "Input in-correct, plz check and try again."
+        }
+    },
+    "menu": {
+        "profile": "Profile",
+        "logout": "Logout"
+    },
+    "tooltip": {
+        "switchLang": "Switch language"
+    },
+    "module": {
+        "adv_management": "Ads management",
+        "comp_management": "Company management",
+        "cust_management": "Customer management",
+        "user_management": "User management",
+        "settings": "Settings"
+    },
+    "lang": {
+        "vi": "VN",
+        "en": "EN"
+    }
 }

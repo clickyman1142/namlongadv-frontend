@@ -91,5 +91,19 @@
     "menu": {
         "profile": "Thông tin cá nhân",
         "logout": "Đăng xuất"
+    },
+    "tooltip": {
+        "switchLang": "Thay đổi ngôn ngữ"
+    },
+    "module": {
+        "adv_management": "Quản lý địa điểm",
+        "comp_management": "Quản lý công ty",
+        "cust_management": "Quản lý khách hàng",
+        "user_management": "Quản lý tài khoản",
+        "settings": "Cài đặt"
+    },
+    "lang": {
+        "vi": "VN",
+        "en": "EN"
     }
 }

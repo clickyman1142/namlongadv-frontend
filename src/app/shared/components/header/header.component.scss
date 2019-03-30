@@ -45,4 +45,12 @@
             height: 100%;
         }
     }
+
+    .lang {
+        border-radius: 0;
+        color: white;
+        &:focus {
+            outline: none;
+        }
+    }
 }

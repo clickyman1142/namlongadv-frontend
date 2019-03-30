@@ -12,9 +12,6 @@ import { AuthGuard } from '../authorize/guards/auth.guard';
 import { Spinner } from 'src/app/shared/services/spinner.service';
 import { SpinnerComponent } from 'src/app/shared/components/spinner/spinner.component';
 import { SnackBar } from 'src/app/shared/services/snackbar.service';
-import { TranslateModule, TranslateLoader, TranslateService } from '@ngx-translate/core';
-import { createTranslateLoader } from 'src/app/app.module';
-import { HttpClient } from '@angular/common/http';
 
 @NgModule({
     declarations: [
@@ -30,13 +27,6 @@ import { HttpClient } from '@angular/common/http';
         CommonModule,
         HomeRoutes,
         SharedModule,
-        TranslateModule.forRoot({
-            loader: {
-                provide: TranslateLoader,
-                useFactory: createTranslateLoader,
-                deps: [HttpClient]
-            }
-        }),
     ],
     exports: [
         HomeComponent
@@ -48,7 +38,4 @@ import { HttpClient } from '@angular/common/http';
     ]
 })
 export class HomeModule {
-    constructor(private translate: TranslateService) {
-        this.translate.setDefaultLang('vi');
-    }
 }

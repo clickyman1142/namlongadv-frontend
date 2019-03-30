@@ -28,35 +28,35 @@ export class SideMenuComponent implements OnInit {
         this.menuItems = [
             {
                 id: 1,
-                name: 'Quản lý địa điểm',
+                name: 'module.adv_management',
                 route: this.appConfig.routes.advManagement,
                 icon: 'management',
                 children: []
             },
             {
                 id: 2,
-                name: 'Quản lý công ty',
+                name: 'module.comp_management',
                 route: this.appConfig.routes.companyManagement,
                 icon: 'management',
                 children: []
             },
             {
                 id: 3,
-                name: 'Quản lý khách hàng',
+                name: 'module.cust_management',
                 route: this.appConfig.routes.customerManagement,
                 icon: 'management',
                 children: []
             },
             {
                 id: 4,
-                name: 'Quản lý tài khoản',
+                name: 'module.user_management',
                 route: this.appConfig.routes.userManagement,
                 icon: 'management',
                 children: []
             },
             {
                 id: 5,
-                name: 'Cài đặt',
+                name: 'module.settings',
                 route: this.appConfig.routes.settings,
                 icon: 'management',
                 children: []

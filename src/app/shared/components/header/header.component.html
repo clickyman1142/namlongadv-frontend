@@ -1,9 +1,11 @@
-<header class="header-container" fxLayout="row wrap" fxLayoutAlign="space-between">
+<header class="header-container" fxLayout="row wrap">
     <mat-icon svgIcon="toggleMenuIcon" (click)="sideMenu.toggle()" [ngClass]="sideMenu.opened && 'opened'"></mat-icon>
+    <div fxFlex="1 0 0"></div>
     <div class="actions" fxLayout="row" fxLayoutAlign="center center">
         <button class="matMenu" mat-stroked-button [matMenuTriggerFor]="menu">
             <img src="../../../../assets/images/avatar.png" class="avatar">
             {{userInfo.name}}
+            <mat-icon>arrow_drop_down</mat-icon>
         </button>
         <mat-menu #menu="matMenu">
             <button mat-menu-item routerLink="/user-management/{{userInfo.user_id}}">
@@ -16,4 +18,5 @@
             </button>
         </mat-menu>
     </div>
+    <button mat-stroked-button class="lang" (click)="switchLang()" matTooltip="{{'tooltip.switchLang' | translate}}">{{'lang.' + lang | translate}}</button>
 </header>

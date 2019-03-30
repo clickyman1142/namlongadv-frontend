@@ -7,6 +7,7 @@ import { HttpUtils } from './utils/http.util';
 import { AutocompleteComponent } from './components/autocomplete/autocomplete.component';
 import { AutocompleteService } from './components/autocomplete/service/autocomplete.service';
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
     imports: [
@@ -23,7 +24,8 @@ import { MatMomentDateModule } from '@angular/material-moment-adapter';
         FormsModule,
         FlexLayoutModule,
         AutocompleteComponent,
-        MatMomentDateModule
+        MatMomentDateModule,
+        TranslateModule
     ],
     declarations: [
         AutocompleteComponent
