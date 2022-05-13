@@ -5,7 +5,7 @@
             visibility: visible !important;
             background-color: #253135;
         }
-        /deep/ .mat-drawer-inner-container {
+        ::ng-deep .mat-drawer-inner-container {
             overflow-x: hidden;
         }
         .content-wrapper {
