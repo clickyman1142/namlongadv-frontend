@@ -12,7 +12,7 @@ import { AppConfig } from 'src/app/config/app.config';
 export class MapComponent implements OnInit {
   baseUrl = AppConfig.endpoints.baseUrl;
   centerCoord: ICoord;
-  @Input() markers = [];
+  @Input() markers: any = [];
 
   previous;
 
@@ -21,6 +21,11 @@ export class MapComponent implements OnInit {
     private spinner: Spinner,
     private locationService: LocationService
   ) { }
+
+  private getRandomInRange(from, to, fixed) {
+    return (Math.random() * (to - from) + from).toFixed(fixed) * 1;
+    // .toFixed() returns string, so ' * 1' is a trick to convert to number
+  }
 
   ngOnInit() {
     this.centerCoord = JSON.parse(sessionStorage.getItem('position'));
@@ -37,8 +42,22 @@ export class MapComponent implements OnInit {
 
     this.spinner.show();
     this.locationService.getAdvPosition().subscribe(rs => {
-      this.markers = rs;
-      this.markers.splice(0, 3500);
+      // this.markers = rs;
+      for (let i = 0; i < 1000; i++) {
+        this.markers.push({
+          longitude: this.getRandomInRange(-180, 180, 8),
+          latitude: this.getRandomInRange(-180, 180, 8),
+          advId: 1234,
+          avatar: {
+            url: 'https://cdn.pixabay.com/photo/2013/07/18/20/26/sea-164989_1280.jpg',
+            scaledSize: {
+              width: 40,
+              height: 40
+            }
+          }
+        });
+      }
+      // this.markers.splice(0, 3500);
       console.log(this.markers);
       this.spinner.hide();
     });

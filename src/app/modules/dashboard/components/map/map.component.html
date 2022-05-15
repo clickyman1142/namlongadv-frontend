@@ -1,10 +1,14 @@
 <agm-map *ngIf="centerCoord" [latitude]="centerCoord.lat" [longitude]="centerCoord.long">
-    <agm-marker *ngFor="let marker of markers; let i = index;"
-    (markerClick)="clickedMarker(infoWindow)"    
-    [latitude]="marker.latitude" [longitude]="marker.longitude">
-        <agm-info-window #infoWindow>
-            <a [routerLink]="'/adv-management/' +  marker.advId">{{marker.title}}</a>
-            <img [src]="baseUrl + '/resources/images?url=' +  marker.avatar">
-        </agm-info-window>
-    </agm-marker>
+    <agm-marker-cluster>
+        <agm-marker *ngFor="let marker of markers; let i = index;"
+        (markerClick)="clickedMarker(infoWindow)"
+        [latitude]="marker.latitude" [longitude]="marker.longitude"
+        [agmFitBounds]="true"
+        [iconUrl]="marker.avatar">
+            <agm-info-window #infoWindow>
+                <a [routerLink]="'/adv-management/' +  marker.advId">{{marker.title}}</a>
+                <img [src]="baseUrl + '/resources/images?url=' + marker.avatar.url">
+            </agm-info-window>
+        </agm-marker>
+    </agm-marker-cluster>
 </agm-map>

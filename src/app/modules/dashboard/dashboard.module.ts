@@ -4,8 +4,9 @@ import { DashboardComponent } from './dashboard.component';
 import { MapComponent } from './components/map/map.component';
 import { DashboardRoutes } from './dashboard-routes';
 import { AgmCoreModule } from '@agm/core';
-import { GeoLocationService } from 'src/app/shared/utils/geo-location.service';
+import { GeoLocationService } from '../../shared/utils/geo-location.service';
 import { LocationService } from './shared/location.service';
+import { AgmMarkerClustererModule } from '@agm/markerclusterer';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { LocationService } from './shared/location.service';
     DashboardRoutes,
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyDCa1LUe1vOczX1hO_iGYgyo8p_jYuGOPU'
-    })
+    }),
+    AgmMarkerClustererModule
   ],
   providers: [
     GeoLocationService,
